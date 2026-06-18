@@ -1,0 +1,94 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">New Employee Registration</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="successMessage" class="alert alert-success py-2">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="alert alert-danger py-2">{{ errorMessage }}</div>
+
+          <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Full Name</label>
+              <input type="text" class="form-control" formControlName="name"
+                     [ngClass]="{'is-invalid': regForm.get('name')?.touched && regForm.get('name')?.invalid}">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Gender</label>
+              <select class="form-select" formControlName="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Email</label>
+              <input type="email" class="form-control" formControlName="email"
+                     [ngClass]="{'is-invalid': regForm.get('email')?.touched && regForm.get('email')?.invalid}">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Phone</label>
+              <input type="text" class="form-control" formControlName="phone"
+                     [ngClass]="{'is-invalid': regForm.get('phone')?.touched && regForm.get('phone')?.invalid}">
+            </div>
+
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label class="form-label fw-semibold">Age</label>
+                <input type="number" class="form-control" formControlName="age"
+                       [ngClass]="{'is-invalid': regForm.get('age')?.touched && regForm.get('age')?.invalid}">
+              </div>
+              <div class="col-6 mb-3">
+                <label class="form-label fw-semibold">Salary</label>
+                <input type="number" class="form-control" formControlName="salary"
+                       [ngClass]="{'is-invalid': regForm.get('salary')?.touched && regForm.get('salary')?.invalid}">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Save Employee</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">
+          <h5 class="mb-0">Employee Records Directory</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0 align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Email</th>
+                  <th>Age</th>
+                  <th>Salary</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let emp of employees">
+                  <td>{{ emp.name }}</td>
+                  <td>{{ emp.gender }}</td>
+                  <td>{{ emp.email }}</td>
+                  <td>{{ emp.age }}</td>
+                  <td>{{ emp.salary | currency:'INR':'symbol':'1.2-2' }}</td>
+                </tr>
+                <tr *ngIf="employees.length === 0">
+                  <td colspan="5" class="text-center text-muted py-4">No employees registered yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

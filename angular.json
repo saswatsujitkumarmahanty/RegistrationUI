@@ -16,18 +16,14 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
-            "styles": [
-              "src/styles.css"
-            ]
-          },
+  "outputPath": "dist/registration-frontend",
+  "index": "src/index.html",
+  "polyfills": ["zone.js"],
+  "tsConfig": "tsconfig.app.json",
+  "assets": [{"glob": "**/*", "input": "public"}],
+  "styles": [],
+  "scripts": []
+},
           "configurations": {
             "production": {
               "budgets": [
@@ -54,6 +50,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "RegistrationUI:build:production"
