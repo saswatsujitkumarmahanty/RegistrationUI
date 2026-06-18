@@ -1,0 +1,192 @@
+/* Background matching the premium theme */
+.dash-container {
+    min-height: 100vh;
+    background: #f4f7f6;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Elevated Container Card */
+.dash-card {
+    background: white;
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-top: 6px solid #667eea;
+    overflow: hidden;
+}
+
+/* Header Section */
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.dash-title {
+    margin: 0;
+    color: #2d3748;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+}
+
+/* Primary Add Button */
+.btn-primary-action {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.5);
+}
+
+/* Table Styling */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.custom-table th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 16px 20px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.custom-table td {
+    padding: 16px 20px;
+    color: #334155;
+    border-bottom: 1px solid #edf2f7;
+    vertical-align: middle;
+}
+
+.custom-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+.fw-bold {
+    font-weight: 700;
+    color: #475569;
+}
+
+.salary-text {
+    font-weight: 600;
+    color: #10b981; /* Green for money */
+}
+
+/* Fun Badge Styling for Gender */
+.gender-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-male {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+
+.badge-female {
+    background-color: #fce7f3;
+    color: #db2777;
+}
+
+/* Action Buttons (Update, Delete, View) */
+.action-cell {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.action-btn {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-view {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+.btn-view:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+.btn-update {
+    background-color: #fff7ed;
+    color: #ea580c;
+}
+.btn-update:hover {
+    background-color: #ffedd5;
+}
+
+.btn-delete {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+.btn-delete:hover {
+    background-color: #fee2e2;
+}
+
+/* Empty State Styling */
+.empty-state {
+    padding: 40px;
+    text-align: center;
+    color: #94a3b8;
+    font-style: italic;
+}
+/* Center the new Actions header text over the buttons */
+.custom-table th.action-header {
+    text-align: center;
+    color: #64748b;
+}
+
+/* Fix for the right-side cutoff: Gives the table wrapper 
+   breathing room so the Delete button doesn't get clipped */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+
+/* Optional: Ensure the action column has a comfortable fixed width */
+.custom-table th:last-child, 
+.custom-table td:last-child {
+    min-width: 220px;
+}

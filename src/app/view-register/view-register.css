@@ -1,0 +1,110 @@
+.dash-container {
+    padding: 20px;
+    background-color: #f4f7f6; /* Adjust to match your app's background */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.dash-card.view-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 600px; /* Constrains width so it doesn't stretch too far */
+    margin-top: 40px;
+    padding: 30px;
+    border-top: 5px solid #6b5b95; /* Matching your directory header */
+}
+
+.dash-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.dash-title {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Detail Grid Styling */
+.employee-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.detail-label {
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.detail-value {
+    color: #2b2b2b;
+    font-size: 1rem;
+}
+
+.fw-bold {
+    font-weight: 700;
+}
+
+.salary-text {
+    color: #28a745;
+    font-weight: 600;
+}
+
+/* Reusing your Gender Badges */
+.gender-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.badge-male { background-color: #e3f2fd; color: #0d47a1; }
+.badge-female { background-color: #fce4ec; color: #880e4f; }
+
+/* Empty state matching your directory */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-style: italic;
+}
+
+/* Footer & Buttons */
+.card-footer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.btn-primary-action {
+    background-color: #6b5b95; /* Matching your Add Employee button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-primary-action:hover {
+    background-color: #554777;
+}

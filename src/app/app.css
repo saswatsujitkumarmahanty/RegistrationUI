@@ -1,0 +1,72 @@
+/* Navbar styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f1f3f4; /* Light grey background */
+  padding: 10px 20px;
+  font-family: Arial, sans-serif;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Links Container */
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+/* Individual links */
+.nav-item {
+  text-decoration: none;
+  color: #4a4a4a;
+  font-size: 16px;
+  padding: 5px 10px;
+  transition: color 0.2s ease;
+}
+
+.nav-item:hover {
+  color: #000000;
+}
+
+/* Active route styling (Optional but helpful) */
+.nav-item.active {
+  font-weight: bold;
+  color: #000000;
+}
+
+/* Search Bar Container */
+.nav-search {
+  display: flex;
+  gap: 10px;
+}
+
+/* Input box */
+.search-input {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
+}
+
+/* Search Button */
+.search-btn {
+  background-color: #e8f5e9; /* Light green tint */
+  color: #2e7d32; /* Darker green text */
+  border: 1px solid #a5d6a7;
+  border-radius: 4px;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.search-btn:hover {
+  background-color: #c8e6c9;
+}
+
+/* Dynamic content area padding */
+.content-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}

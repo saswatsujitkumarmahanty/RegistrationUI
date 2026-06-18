@@ -1,0 +1,62 @@
+<div class="dash-container">
+    <div class="dash-card">
+        <div class="dash-header">
+            <h2 class="dash-title">Employee Directory</h2>
+            <button class="btn-primary-action" (click)="AddEmployee()">
+                + Add Employee
+            </button>
+        </div>
+
+        <div class="search-bar" style="margin-bottom: 20px;">
+            <input 
+              type="text" 
+              (keyup)="onSearch($event)" 
+              placeholder="Search by name..." 
+              style="padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ccc;">
+        </div>
+
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th class="3">ID</th>
+                        <th class="2">Name</th>
+                        <th class="1">Gender</th>
+                        <th class="3">Email</th>
+                        <th class="2">Phone</th>
+                        <th class="2">Age</th>
+                        <th class="2">Salary</th>
+                        <th class="1">View</th>
+                        <th class="1">Update</th>
+                        <th class="1">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of displayEmployees">
+    <td class="fw-bold">{{ data.id }}</td>
+    <td>{{ data.name }}</td>
+    <td>
+        <span class="gender-badge" [ngClass]="data.gender === 'Male' ? 'badge-male' : 'badge-female'">
+            {{ data.gender }}
+        </span>
+    </td>
+    <td>{{ data.email }}</td>
+    <td>{{ data.phone }}</td>
+    <td>{{ data.age }}</td>
+    <td class="salary-text">${{ data.salary }}</td>
+    
+    <td>
+        <button class="action-btn btn-view" (click)="onView(data.id)" title="View">View</button> </td>
+     <td>  <button class="action-btn btn-update" (click)="onUpdate(data.id)" title="Update">Update</button> </td>
+      <td><button class="action-btn btn-delete" (click)="onDelete(data.id)" title="Delete">Delete</button></td>
+    
+</tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="empty-state" *ngIf="displayEmployees.length === 0">
+            <p>No employees found.</p>
+        </div>
+    </div>
+</div>

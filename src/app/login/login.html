@@ -1,0 +1,58 @@
+<div class="interactive-bg">
+    <div class="dash-container">
+        <div class="dash-card">
+            
+            <div class="dash-header">
+                <h2 class="dash-title">{{ !showOtpStep ? 'Welcome Back' : 'Security Verification' }}</h2>
+                <p class="dash-subtitle">
+                    {{ !showOtpStep ? 'Log in to your RegistrationUI dashboard.' : 'Enter the 6-digit verification code sent to your devices.' }}
+                </p>
+            </div>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="dash-form">
+                
+                <ng-container *ngIf="!showOtpStep">
+                    <div class="floating-group">
+                        <input type="email" formControlName="email" placeholder=" " class="form-input" id="login-email">
+                        <label for="login-email" class="floating-label">Email Address</label>
+                    </div>
+
+                    <div class="floating-group">
+                        <input type="text" formControlName="phone" placeholder=" " class="form-input" id="login-phone">
+                        <label for="login-phone" class="floating-label">Phone Number</label>
+                    </div>
+
+                    <button type="submit" [disabled]="loginForm.get('email')?.invalid || loginForm.get('phone')?.invalid" class="btn btn-primary">
+                        <span>Send Verification Code</span>
+                    </button>
+
+                    <div class="forgot-container">
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <button type="button" routerLink="/signup" class="btn btn-secondary">
+                        Create New Account
+                    </button>
+                </ng-container>
+
+                <ng-container *ngIf="showOtpStep">
+                    <div class="floating-group">
+                        <input type="text" formControlName="otpCode" placeholder=" " class="form-input" id="login-otp" maxlength="6" autocomplete="one-time-code">
+                        <label for="login-otp" class="floating-label">6-Digit OTP Token</label>
+                    </div>
+
+                    <button type="submit" [disabled]="loginForm.get('otpCode')?.invalid" class="btn btn-primary">
+                        <span>Confirm & Authorize</span>
+                    </button>
+
+                    <div class="forgot-container">
+                        <a href="javascript:void(0)" (click)="backToLoginCredentials()" class="forgot-link">
+                            ← Change Account Details
+                        </a>
+                    </div>
+                </ng-container>
+
+            </form>
+        </div>
+    </div>
+</div>

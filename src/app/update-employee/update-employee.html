@@ -1,0 +1,61 @@
+<div class="interactive-bg">
+    <div class="dash-container">
+        <div class="dash-card update-card">
+            
+            <div class="dash-header">
+                <h2 class="dash-title">Update Employee</h2>
+                <p class="dash-subtitle">Modify employee records securely</p>
+            </div>
+
+            <form [formGroup]="updateEmployeeForm" (ngSubmit)="OnSubmit()" class="dash-form">
+                
+                <div class="floating-group">
+                    <input type="text" formControlName="name" placeholder=" " class="form-input" id="emp-name">
+                    <label for="emp-name" class="floating-label">Full Name</label>
+                </div>
+
+                <div class="floating-group">
+                    <div class="select-wrapper">
+                        <select formControlName="gender" class="form-input select-control" id="emp-gender">
+                            <option value="" disabled selected hidden></option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <label for="emp-gender" class="floating-label">Gender</label>
+                    </div>
+                </div>
+
+                <div class="floating-group">
+                    <input type="email" formControlName="email" placeholder=" " class="form-input" id="emp-email">
+                    <label for="emp-email" class="floating-label">Email Address</label>
+                </div>
+
+                <div class="floating-group">
+                    <input type="text" formControlName="phone" placeholder=" " class="form-input" id="emp-phone">
+                    <label for="emp-phone" class="floating-label">Phone Number</label>
+                </div>
+
+                <div class="form-row">
+                    <div class="floating-group flex-1">
+                        <input type="number" formControlName="age" placeholder=" " class="form-input" id="emp-age">
+                        <label for="emp-age" class="floating-label">Age</label>
+                    </div>
+                    <div class="floating-group flex-1">
+                        <input type="number" formControlName="salary" placeholder=" " class="form-input" id="emp-salary">
+                        <label for="emp-salary" class="floating-label">Salary ($)</label>
+                    </div>
+                </div>
+
+                <div class="action-buttons-container">
+                    <button type="submit" [disabled]="!updateEmployeeForm.valid" class="btn-primary-action">
+                        Update Records
+                    </button>
+                    <button type="button" class="btn-secondary-action" (click)="OnCancel()">
+                        Cancel
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

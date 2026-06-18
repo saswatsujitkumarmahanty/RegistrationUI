@@ -1,0 +1,48 @@
+<div class="ae-container">
+    <div class="ae-card">
+        <h2 class="ae-title">Add New Employee</h2>
+        <hr class="ae-divider">
+        
+        <form [formGroup]="addEmployeeForm" (ngSubmit)="OnSubmit()">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="ae-input" placeholder="Enter name" formControlName="name">
+            </div>
+            
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select class="ae-input" formControlName="gender">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="ae-input" placeholder="Enter email" formControlName="email">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" class="ae-input" placeholder="Enter phone" formControlName="phone">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label for="age">Age:</label>
+                    <input type="number" class="ae-input" placeholder="Age" formControlName="age">
+                </div>
+                <div class="form-group half-width">
+                    <label for="salary">Salary:</label>
+                    <input type="number" class="ae-input" placeholder="Salary" formControlName="salary">
+                </div>
+            </div>
+            
+            <div class="ae-actions">
+                <button type="submit" class="ae-btn ae-btn-add">Add Employee</button>
+                <button type="button" class="ae-btn ae-btn-cancel" (click)="OnCancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

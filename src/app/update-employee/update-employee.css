@@ -1,0 +1,194 @@
+/* Container Layout Matrix */
+.interactive-bg {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+/* Premium Card & Elevate Micro-shadow Matrix */
+.update-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-top: 6px solid #667eea;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.update-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+.dash-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.dash-title {
+    font-size: 28px;
+    color: #2d3748;
+    font-weight: 800;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+}
+
+.dash-subtitle {
+    color: #718096;
+    font-size: 14px;
+    margin: 0;
+}
+
+.dash-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+/* --- Floating Label Layout & State Rules --- */
+.floating-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #edf2f7;
+    border-radius: 12px;
+    background: #f7fafc;
+    font-size: 15px;
+    color: #2d3748;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+select.form-input {
+    cursor: pointer;
+}
+
+.floating-label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    font-size: 15px;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    padding: 0 5px;
+}
+
+/* Dynamic Text Presence Animation Trigger */
+.form-input:focus ~ .floating-label,
+.form-input:not(:placeholder-shown) ~ .floating-label,
+.select-control:valid ~ .floating-label {
+    top: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #667eea;
+    background: #ffffff;
+}
+
+.form-input:focus {
+    background-color: white;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+/* --- Real-Time Angular Validation State Painting --- */
+.form-input.ng-dirty.ng-invalid {
+    border-color: #ff7675;
+}
+.form-input.ng-dirty.ng-invalid ~ .floating-label {
+    color: #ff7675;
+}
+
+.form-input.ng-dirty.ng-valid {
+    border-color: #10b981;
+}
+.form-input.ng-dirty.ng-valid ~ .floating-label {
+    color: #10b981;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* --- Action Control Layout Rules --- */
+.action-buttons-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btn-primary-action, .btn-secondary-action {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Update Button Styles */
+.btn-primary-action {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary-action:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+/* Cancel Button Styles */
+.btn-secondary-action {
+    background: #edf2f7;
+    color: #4a5568;
+}
+
+.btn-secondary-action:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+/* Click and State Modifiers */
+.btn-primary-action:active, .btn-secondary-action:active {
+    transform: translateY(0) scale(0.98);
+}
+
+button:disabled {
+    background: #cbd5e0 !important;
+    color: #718096 !important;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
