@@ -1,0 +1,139 @@
+/* Navbar layout (from your snippet) */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f1f3f4; /* Light grey background */
+  padding: 0px 30px;
+  font-family: Arial, sans-serif;
+  border-bottom: 1px solid #e0e0e0;
+  height: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Gives the header that elevated FB look */
+  z-index: 1000;
+}
+
+/* Left side: Branding/Links */
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-brand {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #667eea;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+/* Right side: Profile Dropdown Container */
+.nav-profile {
+  position: relative;
+  display: inline-block;
+}
+
+/* The Clickable Name Button */
+.dropbtn {
+  background-color: white;
+  color: #4a5568;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.dropbtn:hover {
+  background-color: #e2e8f0;
+}
+
+/* The Dropdown Menu Box */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: #ffffff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  z-index: 1000; /* High z-index ensures it sits on top of the dashboard table */
+  overflow: hidden;
+  border: 1px solid #edf2f7;
+  margin-top: 10px;
+}
+
+/* The Links Inside the Menu */
+.dropdown-content a {
+  color: #4a5568;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.dropdown-content a:hover {
+  background-color: #f8fafc;
+  color: #667eea;
+}
+
+/* CRITICAL: Angular toggles this class to open the menu */
+.dropdown-content.show {
+  display: block;
+}
+
+/* Log In & Sign Up Button Styling */
+.nav-auth a {
+  text-decoration: none;
+  padding: 8px 16px;
+  margin-left: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-login {
+  color: #4a5568;
+}
+
+.btn-login:hover {
+  background-color: #e2e8f0;
+}
+
+.search-input {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px; /* Pill shape like FB */
+  font-size: 14px;
+  width: 300px;
+  background-color: #f0f2f5;
+  transition: background-color 0.3s ease;
+  outline: none;
+}
+
+.search-input:focus {
+  background-color: #e4e6eb;
+}
+
+nav-link {
+  text-decoration: none;
+  color: #65676b;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+/* Hover and Active State */
+.nav-link:hover, .nav-link.active {
+  background-color: #f2f2f2;
+  color: #1877f2;
+}

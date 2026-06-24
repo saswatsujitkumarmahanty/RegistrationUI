@@ -14,6 +14,8 @@ import { Router, RouterLink } from '@angular/router';
 export class Login implements OnInit {
   loginForm!: FormGroup;
   showOtpStep: boolean = false; 
+  service: any;
+  verificationData: any;
 
   constructor(
     private fb: FormBuilder,
@@ -88,5 +90,30 @@ export class Login implements OnInit {
     this.loginForm.get('otpCode')?.clearValidators();
     this.loginForm.get('otpCode')?.setValue('');
     this.loginForm.get('otpCode')?.updateValueAndValidity();
+
+    verifyOtpSubmit()
+    {
+    this.service.verifyOtp(this.verificationData).subscribe({
+      next: (res: any) => {
+        console.log("Access pass granted!", res);
+
+        // 👉 ADD THESE 3 LINES RIGHT HERE 👈
+        // This saves the ID and Name from your C# backend into the browser
+        localStorage.setItem('userId', res.userId);
+        localStorage.setItem('userName', res.name);
+        this.service.userName$.next(res.name); // Instantly updates the Header
+
+       this.router.navigate(['/registration']); 
+      },
+      error: (err: any) => {
+        console.error("OTP Failed", err);
+      }
+    });
   }
+
+  }
+}
+
+function verifyOtpSubmit() {
+  throw new Error('Function not implemented.');
 }

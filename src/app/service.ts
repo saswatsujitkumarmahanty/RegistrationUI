@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Employee } from './employee';
 import { Login } from './login/login';
 import { Signup } from './signup/signup';
-import { Observable } from 'rxjs';
+import { BehaviorSubject,Observable } from 'rxjs';
+import { UpdateEmployee } from './update-employee/update-employee';
+import { Account } from './account/account';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +13,9 @@ import { Observable } from 'rxjs';
 export class Service {
   private employeeUrl: string = 'https://localhost:7158/api/Employee';
   private authUrl: string = 'https://localhost:7158/api/Auth';
+public userName$ = new BehaviorSubject<string>(localStorage.getItem('userName') || 'User');
+  UpdateEmployee: any;
+
   constructor(private http: HttpClient) {}
 
   signup(userData: any): Observable<any> {
@@ -45,4 +50,10 @@ export class Service {
   deleteData(id: any): Observable<any> {
     return this.http.delete(`${this.employeeUrl}/${id}`);
   }
+  
+  UpdateUserName(id: string, name: string): Observable<any> {
+    return this.http.put(`${this.authUrl}/update-name/${id}`, { name });
+  }
+    
+  
 }

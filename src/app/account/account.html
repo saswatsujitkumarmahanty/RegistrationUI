@@ -1,0 +1,25 @@
+<div class="dash-container">
+    <div class="dash-card update-card" style="max-width: 500px; margin: 40px auto;">
+        <div class="dash-header">
+            <h2 class="dash-title">Account Settings</h2>
+            <p class="dash-subtitle">Update your personal profile</p>
+        </div>
+
+        <div *ngIf="successMessage" class="alert-success">
+            {{ successMessage }}
+        </div>
+
+        <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" class="dash-form">
+            <div class="floating-group">
+                <input type="text" formControlName="name" placeholder=" " class="form-input" id="profile-name">
+                <label for="profile-name" class="floating-label">Your Name</label>
+            </div>
+
+            <div class="action-buttons-container" style="margin-top: 30px;">
+                <button type="submit" [disabled]="!accountForm.valid" class="btn-primary-action" style="width: 100%;">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

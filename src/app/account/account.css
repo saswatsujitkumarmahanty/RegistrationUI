@@ -1,0 +1,136 @@
+/* Main container matching the app background */
+.dash-container {
+    min-height: calc(100vh - 60px); /* Adjusts for your navbar height */
+    background: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Elevated Profile Card */
+.dash-card {
+    background: white;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-top: 6px solid #667eea;
+    padding: 30px 40px;
+    box-sizing: border-box;
+}
+
+.dash-header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #edf2f7;
+    padding-bottom: 20px;
+}
+
+.dash-title {
+    margin: 0;
+    color: #2d3748;
+    font-weight: 800;
+    font-size: 1.8rem;
+    letter-spacing: -0.5px;
+}
+
+.dash-subtitle {
+    color: #718096;
+    margin-top: 8px;
+    font-size: 0.95rem;
+}
+
+/* Floating Label Input Logic */
+.floating-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 16px 16px 10px;
+    font-size: 1rem;
+    color: #2d3748;
+    background-color: #f8fafc;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    background-color: white;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.floating-label {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    color: #a0aec0;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+/* Triggers the floating animation when focused or when text is inside */
+.form-input:focus ~ .floating-label,
+.form-input:not(:placeholder-shown) ~ .floating-label {
+    top: -10px;
+    left: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #667eea;
+    background-color: white;
+    padding: 0 6px;
+    border-radius: 4px;
+}
+
+/* Primary Submit Button */
+.btn-primary-action {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary-action:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Disabled State for Button (when form is invalid) */
+.btn-primary-action:disabled {
+    background: #cbd5e0;
+    color: #a0aec0;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Success Message Banner */
+.alert-success {
+    background-color: #c6f6d5;
+    color: #22543d;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 25px;
+    border-left: 4px solid #38a169;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

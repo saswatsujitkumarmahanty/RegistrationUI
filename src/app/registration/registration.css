@@ -2,8 +2,9 @@
 .dash-container {
     min-height: 100vh;
     background: #f4f7f6;
-    padding: 40px 20px;
+    width: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -14,8 +15,8 @@
     background: white;
     width: 100%;
     max-width: 1200px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     border-top: 6px solid #667eea;
     overflow: hidden;
 }

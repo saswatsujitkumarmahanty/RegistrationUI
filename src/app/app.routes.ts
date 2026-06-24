@@ -6,6 +6,8 @@ import { ViewRegister } from './view-register/view-register';
 import { UpdateEmployee } from './update-employee/update-employee';
 import { Login } from './login/login';
 import { Signup } from './signup/signup';
+import { Account } from './account/account';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'signup', pathMatch: 'full' },
@@ -15,5 +17,6 @@ export const routes: Routes = [
   { path: 'update-employee/:id', component: UpdateEmployee },
   { path: 'login', component: Login },
   { path: 'signup', component: Signup },
+  { path: 'account', component: Account },
 ];
 

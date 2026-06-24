@@ -12,10 +12,10 @@
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     width: 100%;
-    max-width: 600px; /* Constrains width so it doesn't stretch too far */
+    max-width: 600px;
     margin-top: 40px;
     padding: 30px;
-    border-top: 5px solid #6b5b95; /* Matching your directory header */
+    border-top: 5px solid #667eea; /* Unified with your main theme color */
 }
 
 .dash-header {

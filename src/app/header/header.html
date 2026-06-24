@@ -1,0 +1,23 @@
+<div class="navbar">
+  <div class="nav-brand">
+    AdminPanel
+  </div>
+
+  <div class="nav-profile">
+    <button class="dropbtn" (click)="toggleDropdown()">
+      {{ currentUserName }} ▼
+    </button>
+    
+    <div class="dropdown-content" [class.show]="dropdownOpen">
+      
+      <a routerLink="/account" (click)="closeDropdown()">⚙️ Account</a>
+      
+      <a href="javascript:void(0)" (click)="closeDropdown()">🔧 Settings</a>
+      
+      <hr style="margin: 4px 0; border: none; border-top: 1px solid #edf2f7;">
+      
+      <a href="javascript:void(0)" (click)="logout()" style="color: #e53e3e;">🚪 Logout</a>
+      
+    </div>
+  </div>
+</div>

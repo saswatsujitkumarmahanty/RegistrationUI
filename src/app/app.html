@@ -1,12 +1,11 @@
-<nav class="navbar ">
-  <div class="nav-links">
-    <li class="nav-item">
-      <a class="nav-link" routerLinkActive="active" [routerLink]="['registration']">Registration</a>
-    </li>
-  </div>
-</nav>
+<div class="app-wrapper">
+  <app-header></app-header>
 
-<main class="content-container">
-  
-  <router-outlet></router-outlet>
-</main>
+  <div class="dashboard-body">
+    <main class="content-container">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <app-footer></app-footer>
+</div>
