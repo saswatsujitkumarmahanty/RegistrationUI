@@ -1,73 +1,78 @@
-/* Navbar layout (from your snippet) */
+/* 1. The Main Header Bar */
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Pushes brand left, icon right */
   align-items: center;
-  background-color: #f1f3f4; /* Light grey background */
-  padding: 0px 30px;
-  font-family: Arial, sans-serif;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  padding: 0 30px; 
   height: 60px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Gives the header that elevated FB look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  position: relative; 
   z-index: 1000;
 }
 
-/* Left side: Branding/Links */
-.nav-links {
-  display: flex;
-  gap: 15px;
-}
-
+/* 2. Brand Styling (Far Left) */
 .nav-brand {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 800;
-  color: #667eea;
-  text-decoration: none;
-  letter-spacing: 0.5px;
+  color: #1877f2; /* Facebook Blue */
+  letter-spacing: -0.5px;
 }
 
-/* Right side: Profile Dropdown Container */
+/* 3. Profile Container (Far Right) */
 .nav-profile {
   position: relative;
   display: inline-block;
 }
 
-/* The Clickable Name Button */
-.dropbtn {
-  background-color: white;
-  color: #4a5568;
-  font-size: 15px;
-  font-weight: 600;
-  border: 1px solid #e2e8f0;
+/* 4. The New Circular Profile Icon Button */
+.profile-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: #e4e6eb; /* Standard FB light gray */
+  color: #050505;
+  border: none;
+  border-radius: 50px; /* Makes it circular */
+  padding: 8px 12px;
   cursor: pointer;
-  padding: 8px 16px;
-  border-radius: 8px;
-  transition: all 0.2s;
+  transition: background-color 0.2s ease;
 }
 
-.dropbtn:hover {
-  background-color: #e2e8f0;
+.profile-icon-btn:hover {
+  background-color: #d8dadf;
 }
 
-/* The Dropdown Menu Box */
+.dropdown-arrow {
+  font-size: 10px;
+  color: #65676B;
+  margin-top: 2px;
+}
+
+/* 5. The Dropdown Menu Box */
 .dropdown-content {
   display: none;
   position: absolute;
-  right: 0;
-  top: 100%;
+  right: 0; /* Aligns the right edge of the menu with the button */
+  top: 110%;
   background-color: #ffffff;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  min-width: 180px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  z-index: 1000; /* High z-index ensures it sits on top of the dashboard table */
+  z-index: 1001;
   overflow: hidden;
   border: 1px solid #edf2f7;
-  margin-top: 10px;
 }
 
-/* The Links Inside the Menu */
+/* Toggled by Angular to show the menu */
+.dropdown-content.show {
+  display: block;
+}
+
+/* 6. The Links Inside the Menu */
 .dropdown-content a {
-  color: #4a5568;
+  color: #050505;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -77,63 +82,5 @@
 }
 
 .dropdown-content a:hover {
-  background-color: #f8fafc;
-  color: #667eea;
-}
-
-/* CRITICAL: Angular toggles this class to open the menu */
-.dropdown-content.show {
-  display: block;
-}
-
-/* Log In & Sign Up Button Styling */
-.nav-auth a {
-  text-decoration: none;
-  padding: 8px 16px;
-  margin-left: 10px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.btn-login {
-  color: #4a5568;
-}
-
-.btn-login:hover {
-  background-color: #e2e8f0;
-}
-
-.search-input {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 50px; /* Pill shape like FB */
-  font-size: 14px;
-  width: 300px;
-  background-color: #f0f2f5;
-  transition: background-color 0.3s ease;
-  outline: none;
-}
-
-.search-input:focus {
-  background-color: #e4e6eb;
-}
-
-nav-link {
-  text-decoration: none;
-  color: #65676b;
-  font-weight: 600;
-  padding: 10px 16px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-}
-
-/* Hover and Active State */
-.nav-link:hover, .nav-link.active {
   background-color: #f2f2f2;
-  color: #1877f2;
 }

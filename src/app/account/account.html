@@ -1,9 +1,15 @@
 <div class="dash-container">
-    <div class="dash-card update-card" style="max-width: 500px; margin: 40px auto;">
-        <div class="dash-header">
-            <h2 class="dash-title">Account Settings</h2>
-            <p class="dash-subtitle">Update your personal profile</p>
+    <div class="dash-header profile-header">
+    
+        <div class="profile-avatar">
+        <span class="avatar-initials">SM</span>
         </div>
+
+        <div class="header-text">
+        <h2 class="dash-title">Account Settings</h2>
+        <p class="dash-subtitle">Manage your personal information</p>
+        </div>
+    </div>
 
         <div *ngIf="successMessage" class="alert-success">
             {{ successMessage }}
@@ -22,4 +28,3 @@
             </div>
         </form>
     </div>
-</div>
