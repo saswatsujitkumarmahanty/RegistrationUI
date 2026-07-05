@@ -5,6 +5,7 @@ import { Service } from '../service';
 
 @Component({
   selector: 'app-add-employee',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './add-employee.html',
   styleUrl: './add-employee.css',

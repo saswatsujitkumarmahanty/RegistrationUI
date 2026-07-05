@@ -19,12 +19,11 @@
   letter-spacing: -0.5px;
 }
 
-/* 3. Profile Container (Far Right) */
+/* 3. Profile Container (Far Right) - CRITICAL FOR DROPDOWN POSITIONING */
 .nav-profile {
   position: relative;
   display: inline-block;
 }
-
 /* 4. The New Circular Profile Icon Button */
 .profile-icon-btn {
   display: flex;
@@ -39,48 +38,148 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
-.profile-icon-btn:hover {
-  background-color: #d8dadf;
-}
-
-.dropdown-arrow {
-  font-size: 10px;
-  color: #65676B;
-  margin-top: 2px;
-}
-
-/* 5. The Dropdown Menu Box */
+/* --- FB Style Dropdown Container --- */
 .dropdown-content {
   display: none;
   position: absolute;
-  right: 0; /* Aligns the right edge of the menu with the button */
+  right: 0;
   top: 110%;
   background-color: #ffffff;
-  min-width: 180px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  width: 360px; /* Wide enough to fit the large menu items */
+  box-shadow: 0px 12px 28px 0px rgba(0, 0, 0, 0.2), 0px 2px 4px 0px rgba(0, 0, 0, 0.1); /* Deep Facebook shadow */
   border-radius: 8px;
   z-index: 1001;
-  overflow: hidden;
-  border: 1px solid #edf2f7;
+  padding: 16px; 
+  box-sizing: border-box;
+  border: none; /* Removed the flat border */
 }
 
-/* Toggled by Angular to show the menu */
 .dropdown-content.show {
   display: block;
 }
 
-/* 6. The Links Inside the Menu */
+/* 1. Top Card inside Dropdown */
+.dropdown-card {
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ced0d4;
+}
+
+.dropdown-profile-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dropdown-avatar {
+  width: 36px;
+  height: 36px;
+  background-color: #e4e6eb;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #65676B;
+}
+
+.dropdown-avatar svg {
+  width: 24px;
+  height: 24px;
+}
+
+.dropdown-profile-name {
+  font-weight: 600;
+  font-size: 17px;
+  color: #050505;
+}
+
+.dropdown-divider {
+  border: none;
+  border-top: 1px solid #ced0d4;
+  margin: 16px 0;
+}
+
+.dropdown-action-btn {
+  display: block;
+  text-align: center;
+  background-color: #e4e6eb;
+  color: #050505;
+  font-weight: 600;
+  padding: 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-action-btn:hover {
+  background-color: #d8dadf;
+}
+
+/* 2. Menu Items */
+.dropdown-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #050505;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.dropdown-menu-item:hover {
+  background-color: #f2f2f2;
+}
+
+.menu-icon-circle {
+  width: 36px;
+  height: 36px;
+  background-color: #e4e6eb; /* The classic gray circle */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+  color: #050505;
+}
+
+.menu-text {
+  flex-grow: 1; /* Pushes the arrow to the right */
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.menu-chevron {
+  font-size: 16px;
+  color: #65676B;
+  font-weight: bold;
+}
+
+/* 3. Footer Links */
+.dropdown-footer {
+  font-size: 13px;
+  color: #65676B;
+  margin-top: 12px;
+  line-height: 1.4;
+  padding: 0 8px;
+}
 .dropdown-content a {
   color: #050505;
-  padding: 12px 16px;
+  padding: 10px 12px;
   text-decoration: none;
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Pushes the emojis away from the text */
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 6px; /* Rounds the corners of the hover effect */
+  transition: background-color 0.2s ease;
+  margin-bottom: 4px;
 }
 
 .dropdown-content a:hover {
-  background-color: #f2f2f2;
+  background-color: #f2f2f2; /* Classic FB gray hover */
 }

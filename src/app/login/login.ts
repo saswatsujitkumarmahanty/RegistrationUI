@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
+import { Service } from '../service'; // Ensure this relative path points to your service.ts
 
 @Component({
   selector: 'app-login',
@@ -14,12 +14,10 @@ import { Router, RouterLink } from '@angular/router';
 export class Login implements OnInit {
   loginForm!: FormGroup;
   showOtpStep: boolean = false; 
-  service: any;
-  verificationData: any;
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
+    private service: Service, // Properly injected your shared data service
     private router: Router
   ) {}
 
@@ -41,25 +39,24 @@ export class Login implements OnInit {
 
   private handleRequestOtp() {
     if (this.loginForm.get('email')?.valid && this.loginForm.get('phone')?.valid) {
-      const payload = {
+      const credentials = {
         email: this.loginForm.value.email,
         phone: this.loginForm.value.phone
       };
 
-      this.http.post('https://localhost:7158/api/Auth/login', payload).subscribe({
+      // Using your central service method
+      this.service.login(credentials).subscribe({
         next: (response: any) => {
-          console.log('Account identified! OTP generated and cached.', response);
+          console.log('OTP Verification Code Issued!', response);
           this.showOtpStep = true;
-
-          this.loginForm.get('otpCode')?.setValidators([
-            Validators.required, 
-            Validators.pattern(/^\d{6}$/)
-          ]);
+          
+          // Apply strict validation rules to the OTP field once active
+          this.loginForm.get('otpCode')?.setValidators([Validators.required, Validators.minLength(6)]);
           this.loginForm.get('otpCode')?.updateValueAndValidity();
         },
         error: (error) => {
-          console.error('Step 1 Authentication Fault', error);
-          alert(error.error?.message || 'Invalid account records combination matching entries.');
+          console.error('Step 1 Auth Request Denied', error);
+          alert(error.error?.message || 'The credentials entered could not be verified.');
         }
       });
     }
@@ -72,9 +69,19 @@ export class Login implements OnInit {
         otpCode: this.loginForm.value.otpCode
       };
 
-      this.http.post('https://localhost:7158/api/Auth/verify-otp', verificationPayload).subscribe({
-        next: (response: any) => {
-          console.log('Access pass granted!', response);
+      // Directing token verification through the service
+      this.service.verifyOtp(verificationPayload).subscribe({
+        next: (res: any) => {
+          console.log('Access pass granted!', res);
+
+          // Save the unique identifier and profile details returned from your C# backend
+          localStorage.setItem('userId', res.userId);
+          localStorage.setItem('userName', res.name);
+          
+          // Instantly broadcast the profile name change to update the application Header
+          this.service.userName$.next(res.name); 
+
+          // Clear validation states and route into the dashboard directory
           this.router.navigateByUrl('/registration'); 
         },
         error: (error) => {
@@ -90,30 +97,5 @@ export class Login implements OnInit {
     this.loginForm.get('otpCode')?.clearValidators();
     this.loginForm.get('otpCode')?.setValue('');
     this.loginForm.get('otpCode')?.updateValueAndValidity();
-
-    verifyOtpSubmit()
-    {
-    this.service.verifyOtp(this.verificationData).subscribe({
-      next: (res: any) => {
-        console.log("Access pass granted!", res);
-
-        // 👉 ADD THESE 3 LINES RIGHT HERE 👈
-        // This saves the ID and Name from your C# backend into the browser
-        localStorage.setItem('userId', res.userId);
-        localStorage.setItem('userName', res.name);
-        this.service.userName$.next(res.name); // Instantly updates the Header
-
-       this.router.navigate(['/registration']); 
-      },
-      error: (err: any) => {
-        console.error("OTP Failed", err);
-      }
-    });
   }
-
-  }
-}
-
-function verifyOtpSubmit() {
-  throw new Error('Function not implemented.');
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
+import { Service } from '../service';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class Signup implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
+    private service: Service,
     private router: Router
   ) {}
 
@@ -35,7 +35,7 @@ export class Signup implements OnInit {
 
   onSubmit() {
     if (this.signupForm.valid) {
-      this.http.post('https://localhost:7158/api/Auth/signup', this.signupForm.value).subscribe({
+      this.service.signup(this.signupForm.value).subscribe({
         next: (response: any) => {
           console.log('Registration successful', response);
           alert('Account created successfully! Please log in.');
