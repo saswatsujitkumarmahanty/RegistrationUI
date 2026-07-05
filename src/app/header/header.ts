@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { Service } from '../service'; // Adjust path if necessary
@@ -8,16 +8,20 @@ import { Service } from '../service'; // Adjust path if necessary
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './header.html',
-  styleUrls: ['./header.css']
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrls: ['./header.css'],
 })
 export class Header implements OnInit {
   currentUserName: string = 'User';
   dropdownOpen: boolean = false;
 
-  constructor(private router: Router, private service: Service) {}
+  constructor(
+    private router: Router,
+    private service: Service,
+  ) {}
 
   ngOnInit() {
-    this.service.userName$.subscribe(name => {
+    this.service.userName$.subscribe((name) => {
       this.currentUserName = name;
     });
   }

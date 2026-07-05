@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { Footer } from "./footer/footer";
-import { Header } from "./header/header";
+import { Footer } from './footer/footer';
+import { Header } from './header/header';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterModule, Footer, Header],
   templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrls: ['./app.css'],
 })
 export class AppComponent {
   title = 'RegistrationUI';
@@ -19,5 +20,5 @@ export class AppComponent {
   // 3. This method fixes the "Property 'isAuthPage' does not exist" error
   isAuthPage(): boolean {
     return this.router.url === '/login' || this.router.url === '/signup';
-}
+  }
 }

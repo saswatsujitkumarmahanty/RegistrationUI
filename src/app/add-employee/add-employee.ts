@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { Service } from '../service';
@@ -8,31 +8,34 @@ import { Service } from '../service';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './add-employee.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './add-employee.css',
 })
 export class AddEmployee {
-
   addEmployeeForm: FormGroup;
 
-constructor(private router: Router,private fb: FormBuilder, private registration: Service) { 
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private registration: Service,
+  ) {
+    this.addEmployeeForm = this.fb.group({
+      name: [''],
+      gender: [''],
+      email: [''],
+      phone: [''],
+      age: [''],
+      salary: [''],
+    });
+  }
 
-this.addEmployeeForm =this.fb.group({
-  name:[''],
-  gender:[''],
-  email:[''],
-  phone:[''],
-  age:[''],
-  salary:['']
-})
-}
+  OnSubmit() {
+    this.registration.postData(this.addEmployeeForm.value).subscribe((res) => {
+      this.router.navigateByUrl('registration');
+    });
+  }
 
-OnSubmit() {
-  this.registration.postData(this.addEmployeeForm.value).subscribe(res =>{
+  OnCancel() {
     this.router.navigateByUrl('registration');
-  })
-}
-
-OnCancel() {
-  this.router.navigateByUrl('registration');
-}
+  }
 }

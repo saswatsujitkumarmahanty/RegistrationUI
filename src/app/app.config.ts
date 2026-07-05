@@ -1,11 +1,11 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient} from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient() // Added to handle API transactions
-  ]
+    provideHttpClient(withXhr()), // Added to handle API transactions
+  ],
 };

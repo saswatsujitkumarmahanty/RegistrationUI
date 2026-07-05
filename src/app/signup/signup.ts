@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Service } from '../service';
-
 
 @Component({
   selector: 'app-signup',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './signup.html',
-  styleUrl: './signup.css' // Assuming you have a CSS file for styling
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './signup.css', // Assuming you have a CSS file for styling
 })
 export class Signup implements OnInit {
   signupForm!: FormGroup;
@@ -18,7 +18,7 @@ export class Signup implements OnInit {
   constructor(
     private fb: FormBuilder,
     private service: Service,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +29,7 @@ export class Signup implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(18)]],
-      salary: ['', Validators.required]
+      salary: ['', Validators.required],
     });
   }
 
@@ -39,14 +39,14 @@ export class Signup implements OnInit {
         next: (response: any) => {
           console.log('Registration successful', response);
           alert('Account created successfully! Please log in.');
-          
+
           // Send them to the login page after signing up
-          this.router.navigateByUrl('/login'); 
+          this.router.navigateByUrl('/login');
         },
         error: (error) => {
           console.error('Registration failed', error);
           alert('Failed to create account. That email might already be registered.');
-        }
+        },
       });
     } else {
       alert('Please fill out all fields correctly.');
