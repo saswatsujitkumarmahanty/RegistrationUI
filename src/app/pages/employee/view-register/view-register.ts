@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Service } from '../service';
+import { EmployeeService } from '../../../core/services/employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ViewRegister implements OnInit {
   constructor(
-    private registration: Service,
+    private registration: EmployeeService,
     private cdr: ChangeDetectorRef,
     private activeRoute: ActivatedRoute,
     private router: Router,

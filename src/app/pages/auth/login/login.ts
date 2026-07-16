@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Service } from '../service'; // Ensure this relative path points to your service.ts
+import { AuthService } from '../../../core/services/service'; // Ensure this relative path points to your service.ts
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,7 @@ export class Login implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: Service, // Properly injected your shared data service
+    private service: AuthService, // Properly injected your shared data service
     private router: Router,
   ) {}
 

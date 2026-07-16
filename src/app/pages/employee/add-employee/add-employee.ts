@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
-import { Service } from '../service';
+import { EmployeeService } from '../../../core/services/employee.service';
 
 @Component({
   selector: 'app-add-employee',
@@ -17,7 +17,7 @@ export class AddEmployee {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private registration: Service,
+    private registration: EmployeeService,
   ) {
     this.addEmployeeForm = this.fb.group({
       name: [''],
@@ -30,7 +30,7 @@ export class AddEmployee {
   }
 
   OnSubmit() {
-    this.registration.postData(this.addEmployeeForm.value).subscribe((res) => {
+    this.registration.addEmployee(this.addEmployeeForm.value).subscribe((res: any) => {
       this.router.navigateByUrl('registration');
     });
   }

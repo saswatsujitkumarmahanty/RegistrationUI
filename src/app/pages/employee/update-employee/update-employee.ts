@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Service } from '../service';
+import { EmployeeService } from '../../../core/services/employee.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +15,7 @@ export class UpdateEmployee implements OnInit {
   updateEmployeeForm: FormGroup;
 
   constructor(
-    private registration: Service,
+    private registration: EmployeeService,
     private activeRoute: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,

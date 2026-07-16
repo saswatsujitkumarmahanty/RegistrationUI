@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { Footer } from './footer/footer';
-import { Header } from './header/header';
+import { Footer } from './shared/footer/footer';
+import { Header } from './shared/header/header';
 
 @Component({
   selector: 'app-root',

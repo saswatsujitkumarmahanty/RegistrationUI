@@ -1,9 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Service } from '../service';
-import { RouterOutlet } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { AuthService } from '../../core/services/service';
 
 @Component({
   selector: 'app-account',
@@ -31,7 +29,7 @@ export class Account implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: Service,
+    @Inject(AuthService) private service: AuthService,
   ) {}
 
   ngOnInit() {
@@ -60,7 +58,7 @@ export class Account implements OnInit {
       }
 
       // REAL MODE: Send to backend
-      this.service.UpdateUserName(this.userId, newName).subscribe({
+      this.service.updateUserName(this.userId, newName).subscribe({
         next: (res: any) => {
           localStorage.setItem('userName', newName);
           this.service.userName$.next(newName);

@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Service } from '../service';
+import { AuthService } from '../../../core/services/service';
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +17,7 @@ export class Signup implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: Service,
+    private service: AuthService,
     private router: Router,
   ) {}
 
@@ -52,4 +52,5 @@ export class Signup implements OnInit {
       alert('Please fill out all fields correctly.');
     }
   }
-}
+};
+
