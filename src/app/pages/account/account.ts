@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/service';
 
 @Component({
@@ -9,60 +10,66 @@ import { AuthService } from '../../core/services/service';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './account.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./account.css'], // (Optional: You can reuse your update-employee.css styling here)
+  styleUrls: ['./account.css'],
 })
 export class Account implements OnInit {
-  logout() {
-    throw new Error('Method not implemented.');
-  }
-  closeDropdown() { // TEST MODE: If no userId is found, update the UI only (no DB save)
-    throw new Error('Method not implemented.');
-  }
-  currentUserName: any;
-  dropdownOpen: any;
-  toggleDropdown() {
-    throw new Error('Method not implemented.');
-  }
   accountForm!: FormGroup;
   userId: string | null = '';
   successMessage: string = '';
+  currentUserName: string = '';
+  dropdownOpen: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     @Inject(AuthService) private service: AuthService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
     this.userId = localStorage.getItem('userId');
 
-    const currentName = localStorage.getItem('userName') || 'Saswat Sujitkumar Mahanty';
+    const currentName = localStorage.getItem('userName') || 'User';
+    this.currentUserName = currentName;
 
     this.accountForm = this.fb.group({
       name: [currentName, [Validators.required, Validators.minLength(2)]],
     });
   }
 
+  toggleDropdown(): void {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  closeDropdown(): void {
+    this.dropdownOpen = false;
+  }
+
+  logout(): void {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('token'); 
+    this.service.userName$.next('User');
+    this.dropdownOpen = false;
+    this.router.navigateByUrl('/login');
+  }
+
   onSubmit() {
     if (this.accountForm.valid) {
       const newName = this.accountForm.value.name;
 
-      // TEST MODE: If no userId is found, update the UI only (no DB save)
       if (!this.userId) {
         console.warn('No User ID found! Updating UI for testing purposes only.');
         localStorage.setItem('userName', newName);
         this.service.userName$.next(newName);
-
         this.successMessage = 'Name updated!!';
         setTimeout(() => (this.successMessage = ''), 3000);
-        return; // Stop here so it doesn't try to call the API
+        return;
       }
 
-      // REAL MODE: Send to backend
       this.service.updateUserName(this.userId, newName).subscribe({
         next: (res: any) => {
           localStorage.setItem('userName', newName);
           this.service.userName$.next(newName);
-
           this.successMessage = 'Name updated in database successfully!';
           setTimeout(() => (this.successMessage = ''), 3000);
         },

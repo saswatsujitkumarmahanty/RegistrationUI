@@ -43,14 +43,6 @@
           >
             <span>Send Verification Code</span>
           </button>
-
-          <div class="forgot-container">
-            <a href="#" class="forgot-link">Forgot password?</a>
-          </div>
-
-          <button type="button" routerLink="/signup" class="btn btn-secondary">
-            Create New Account
-          </button>
         </ng-container>
 
         <ng-container *ngIf="showOtpStep">
@@ -69,7 +61,7 @@
 
           <button
             type="submit"
-            [disabled]="$safeNavigationMigration(loginForm.get('otpCode')?.invalid)"
+            [disabled]="loginForm.get('otpCode')?.invalid"
             class="btn btn-primary"
           >
             <span>Confirm & Authorize</span>

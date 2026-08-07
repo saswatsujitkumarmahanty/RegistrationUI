@@ -2,27 +2,25 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../models/employee';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
-  deleteData(id: string | number) {
-    throw new Error('Method not implemented.');
-  }
-  addEmployee: any;
-  getAllEmployees(): Observable<Employee[]> {
-    throw new Error('Method not implemented.');
-  }
-  private employeeUrl = 'https://localhost:7158/api/Employee';
+  private employeeUrl = `${environment.apiUrl}/Employee`;
 
   constructor(private http: HttpClient) {}
 
-  getData(p0: string): Observable<Employee[]> {
+  getAllEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.employeeUrl);
   }
 
-  postAllEmployees(data: Employee): Observable<any> {
+  getData(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(this.employeeUrl);
+  }
+
+  addEmployee(data: Employee): Observable<any> {
     return this.http.post(this.employeeUrl, data);
   }
 
@@ -34,7 +32,7 @@ export class EmployeeService {
     return this.http.put(`${this.employeeUrl}/${id}`, data);
   }
 
-  deleteEmployee(id: string | number): Observable<any> {
+  deleteData(id: string | number): Observable<any> {
     return this.http.delete(`${this.employeeUrl}/${id}`);
   }
 }

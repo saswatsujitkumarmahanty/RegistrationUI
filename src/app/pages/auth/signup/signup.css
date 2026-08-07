@@ -1,7 +1,14 @@
 /* Container Match & Alignment */
-.interactive-bg {
-    min-height: 100vh;
+:host {
+    display: block;
+    height: 100%;
     width: 100%;
+    overflow: hidden; /* Stops the component itself from scrolling */
+}
+.interactive-bg {
+    height: calc(100vh - 90px);
+    width: 100%;               
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,16 +18,17 @@
     box-sizing: border-box;
 }
 
+
 .signup-card {
-    width: 100%;
-    max-width: 500px;
-    padding: 40px;
+    width: 100%; 
+    max-width: 420px; 
+    padding: 22px 28px; /* Reduced from 40px to fit screen height */
     background: rgba(255, 255, 255, 0.98);
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    border-top: 6px solid #667eea;
-    transform: translateY(0);
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border-top: 5px solid #667eea;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .signup-card:hover {
@@ -30,27 +38,28 @@
 
 .dash-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
 }
 
 .dash-title {
-    font-size: 28px;
+    font-size: 22px;
     color: #2d3748;
     font-weight: 800;
-    margin-bottom: 6px;
     letter-spacing: -0.5px;
+    margin-bottom: 4px;
 }
+
 
 .dash-subtitle {
     color: #718096;
-    font-size: 14px;
+    font-size: 13px;
     margin: 0;
 }
 
 .dash-form {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 12px;
 }
 
 .form-row {
@@ -71,15 +80,15 @@
 
 .form-input {
     width: 100%;
-    padding: 15px;
+    padding: 11px 14px; /* Reduced from 15px/16px */
     border: 2px solid #edf2f7;
-    border-radius: 12px;
+    border-radius: 10px;
     background: #f7fafc;
-    font-size: 15px;
+    font-size: 14px;
     color: #2d3748;
     outline: none;
     box-sizing: border-box;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 /* Ensure clean select control option layout appearance */
@@ -105,7 +114,7 @@ select.form-input {
 .form-input:not(:placeholder-shown) ~ .floating-label,
 .select-control:valid ~ .floating-label {
     top: 0;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: #667eea;
     background: #ffffff;

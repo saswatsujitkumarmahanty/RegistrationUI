@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+/* Lock screen size and hide page scrollbars */
+html, body {
+    height: 100vh !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important; 
+}
+
+/* Force Angular root container to fill screen and stack layout header/content/footer */
+app-root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}

@@ -1,31 +1,29 @@
 /* Animated Mesh Background - Synced to Premium Gradient */
 .interactive-bg {
-    min-height: 100vh;
+    flex: 1;
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     font-family: 'Segoe UI', system-ui, sans-serif;
-    position: relative;
-    overflow: hidden;
-    padding: 20px;
+    padding: 15px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 /* Glassmorphism Card with Signature Top Accent Line */
 .dash-card {
     width: 100%; 
     max-width: 420px; 
-    padding: 40px;
+    padding: 22px 28px; /* Reduced from 40px to fit screen height */
     background: rgba(255, 255, 255, 0.98);
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
-    border-top: 6px solid #667eea;
-    transform: translateY(0);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-top: 5px solid #667eea;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .dash-card:hover {
@@ -35,27 +33,27 @@
 
 .dash-header {
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 16px;
 }
 
 .dash-title {
-    font-size: 28px;
+    font-size: 22px;
     color: #2d3748;
     font-weight: 800;
     letter-spacing: -0.5px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .dash-subtitle {
     color: #718096;
-    font-size: 14px;
+    font-size: 13px;
     margin: 0;
 }
 
 .dash-form {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 12px;
 }
 
 /* --- The Magic Floating Labels & Containers --- */
@@ -67,26 +65,26 @@
 
 .form-input {
     width: 100%;
-    padding: 16px;
+    padding: 11px 14px;
     border: 2px solid #edf2f7;
-    border-radius: 12px;
+    border-radius: 10px;
     background: #f7fafc;
-    font-size: 15px;
+    font-size: 14px;
     color: #2d3748;
     outline: none;
     box-sizing: border-box;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s ease;
 }
 
 .floating-label {
     position: absolute;
-    left: 16px;
+    left: 14px;
     top: 50%;
     transform: translateY(-50%);
     color: #a0aec0;
-    font-size: 15px;
+    font-size: 14px;
     pointer-events: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s ease;
     background: transparent;
     padding: 0 4px;
 }
@@ -95,7 +93,7 @@
 .form-input:focus ~ .floating-label,
 .form-input:not(:placeholder-shown) ~ .floating-label {
     top: 0;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: #667eea;
     background: #ffffff;
@@ -123,18 +121,18 @@
 }
 
 /* --- High-Interaction Buttons --- */
-.btn {
+.btn,.btn-primary-action {
     position: relative;
     width: 100%;
-    padding: 16px;
+    padding: 11px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
+    letter-spacing: 0.8px;
+    transition: all 0.25s ease;
 }
 
 .btn-primary {
@@ -183,4 +181,21 @@
 .forgot-link:hover {
     color: #667eea;
     text-decoration: underline;
+}
+
+.btn-primary-action {
+    margin-top: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
+}
+
+.login-redirect {
+    text-align: center;
+    margin-top: 4px;
+}
+
+.email-label { /* or whatever your label class is */
+  position: absolute;
+  pointer-events: none; /* 👈 Allows clicks to pass right through to the input */
 }

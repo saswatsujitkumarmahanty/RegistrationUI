@@ -9,7 +9,7 @@ import { AuthService } from '../../../core/services/service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './signup.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.Default,
   styleUrl: './signup.css', // Assuming you have a CSS file for styling
 })
 export class Signup implements OnInit {
@@ -29,7 +29,6 @@ export class Signup implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(18)]],
-      salary: ['', Validators.required],
     });
   }
 

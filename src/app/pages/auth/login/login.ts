@@ -7,9 +7,9 @@ import { AuthService } from '../../../core/services/service'; // Ensure this rel
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.Default,
   styleUrl: './login.css',
 })
 export class Login implements OnInit {
@@ -74,19 +74,14 @@ export class Login implements OnInit {
 
       // Directing token verification through the service
       this.service.verifyOtp(verificationPayload).subscribe({
-        next: (res: any) => {
-          console.log('Access pass granted!', res);
-
-          // Save the unique identifier and profile details returned from your C# backend
-          localStorage.setItem('userId', res.userId);
-          localStorage.setItem('userName', res.name);
-
-          // Instantly broadcast the profile name change to update the application Header
-          this.service.userName$.next(res.name);
-
-          // Clear validation states and route into the dashboard directory
-          this.router.navigateByUrl('/registration');
-        },
+  next: (res: any) => {
+    console.log('Access pass granted!', res);
+    localStorage.setItem('userId', res.userId);
+    localStorage.setItem('userName', res.name);
+    localStorage.setItem('token', res.token); // NEW
+    this.service.userName$.next(res.name);
+    this.router.navigateByUrl('/password');
+  },
         error: (error) => {
           console.error('Step 2 Token Check Refused', error);
           alert(

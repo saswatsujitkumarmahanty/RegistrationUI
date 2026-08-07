@@ -1,8 +1,9 @@
 export interface Signup {
   name: string;
+  gender: string;
   email: string;
   phone: string;
-  password?: string;
+  age: number;
 }
 
 export interface Login {
@@ -10,10 +11,11 @@ export interface Login {
   phone: string;
 }
 
+// Matches the JSON actually returned by /login-password, /verify-otp
 export interface AuthResponse {
-  role: string;
-  name: string;
-  token: string;
-  userName: string;
+  message: string;
   userId: string;
+  name: string;
+  role: 'User' | 'Admin';
+  token: string;
 }

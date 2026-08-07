@@ -28,7 +28,7 @@ export class Registration implements OnInit {
 
   getAllData(): void {
     // FIXED: Changed from 'this.registration.getData' to 'this.employeeService.getData'
-    this.employeeService.getData('https://localhost:7158/api/Employee').subscribe({
+    this.employeeService.getData().subscribe({
       next: (res: Employee[]) => {
         this.apiData = res; 
         this.allEmployees = res; 
