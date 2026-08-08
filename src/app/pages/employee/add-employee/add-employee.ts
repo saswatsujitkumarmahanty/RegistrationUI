@@ -8,7 +8,7 @@ import { EmployeeService } from '../../../core/services/employee.service';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './add-employee.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.Default,
   styleUrl: './add-employee.css',
 })
 export class AddEmployee {

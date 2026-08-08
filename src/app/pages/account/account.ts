@@ -9,7 +9,7 @@ import { AuthService } from '../../core/services/service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './account.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.Default,
   styleUrls: ['./account.css'],
 })
 export class Account implements OnInit {
@@ -45,12 +45,8 @@ export class Account implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('token'); 
-    this.service.userName$.next('User');
     this.dropdownOpen = false;
-    this.router.navigateByUrl('/login');
+    this.service.logout();
   }
 
   onSubmit() {
@@ -58,11 +54,8 @@ export class Account implements OnInit {
       const newName = this.accountForm.value.name;
 
       if (!this.userId) {
-        console.warn('No User ID found! Updating UI for testing purposes only.');
-        localStorage.setItem('userName', newName);
-        this.service.userName$.next(newName);
-        this.successMessage = 'Name updated!!';
-        setTimeout(() => (this.successMessage = ''), 3000);
+        alert('Your session appears to be invalid. Please log in again.');
+        this.service.logout();
         return;
       }
 

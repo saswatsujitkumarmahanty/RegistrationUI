@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Employee } from '../../../core/models/employee';
 import { EmployeeService } from '../../../core/services/employee.service';
+import { isAdmin } from '../../../core/utilities/storage.utilities';
 
 @Component({
   selector: 'app-registration',
@@ -16,6 +17,7 @@ export class Registration implements OnInit {
   apiData: Employee[] = [];
   allEmployees: Employee[] = [];
   displayEmployees: Employee[] = [];
+  isAdmin: boolean = isAdmin();
 
   constructor(
     private employeeService: EmployeeService, // Using your clean service layer

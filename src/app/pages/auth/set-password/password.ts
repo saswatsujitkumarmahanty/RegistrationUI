@@ -40,15 +40,7 @@ export class Password implements OnInit {
 });
   }
 
-  ngOnInit(): void {
-    this.queryParamsSub = this.route.queryParams.subscribe(params => {
-      if (params['email']) {
-        this.passwordForm.patchValue({ email: params['email'] });
-        // 3. Trigger change detection manually
-        this.cdr.markForCheck(); 
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
      if (this.passwordForm.invalid) {
@@ -79,11 +71,5 @@ export class Password implements OnInit {
         alert(error?.error?.message || 'Failed to save password.');
       },
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.queryParamsSub) {
-      this.queryParamsSub.unsubscribe();
-    }
   }
 }

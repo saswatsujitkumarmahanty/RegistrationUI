@@ -17,7 +17,7 @@ export const routes: Routes = [
   { path: 'signup', component: Signup },
   { path: 'login', component: Login },
   { path: 'login-password', component: LoginPassword },
-  { path: 'password', component: Password },
+  { path: 'password', component: Password, canActivate: [authGuard] },
   { path: 'registration', component: Registration, canActivate: [authGuard] },
   { path: 'view-register/:id', component: ViewRegister, canActivate: [authGuard] },
   { path: 'account', component: Account, canActivate: [authGuard] },

@@ -5,9 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-register',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './view-register.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.Default,
   styleUrl: './view-register.css',
 })
 export class ViewRegister implements OnInit {

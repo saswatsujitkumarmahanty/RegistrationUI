@@ -6,9 +6,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-update-employee',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './update-employee.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.Default,
   styleUrl: './update-employee.css',
 })
 export class UpdateEmployee implements OnInit {

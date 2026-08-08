@@ -2,9 +2,9 @@
     <div class="dash-card">
         <div class="dash-header">
             <h2 class="dash-title">Employee Directory</h2>
-            <button class="btn-primary-action" (click)="AddEmployee()">
-                + Add Employee
-            </button>
+            <button class="btn-primary-action" *ngIf="isAdmin" (click)="AddEmployee()">
+    + Add Employee
+        </button>
         </div>
 
         <div class="search-bar" style="margin-bottom: 20px;">
@@ -47,8 +47,8 @@
     
     <td>
         <button class="action-btn btn-view" (click)="onView(data.id)" title="View">View</button> </td>
-     <td>  <button class="action-btn btn-update" (click)="onUpdate(data.id)" title="Update">Update</button> </td>
-      <td><button class="action-btn btn-delete" (click)="onDelete(data.id)" title="Delete">Delete</button></td>
+     <td>  <button class="action-btn btn-update" *ngIf="isAdmin" (click)="onUpdate(data.id)" title="Update">Update</button> </td>
+      <td><button class="action-btn btn-delete" *ngIf="isAdmin" (click)="onDelete(data.id)" title="Delete">Delete</button></td>
     
 </tr>
                 </tbody>
