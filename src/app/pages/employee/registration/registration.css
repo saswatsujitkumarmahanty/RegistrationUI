@@ -191,3 +191,28 @@
 .custom-table td:last-child {
     min-width: 220px;
 }
+
+@media (max-width: 768px) {
+    .dash-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 18px 16px;
+    }
+
+    .dash-header .btn-primary-action {
+        width: 100%;
+    }
+
+    .search-bar input {
+        width: 100% !important;
+    }
+
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-only {
+        display: flex;
+    }
+}

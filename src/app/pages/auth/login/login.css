@@ -199,3 +199,18 @@
   position: absolute;
   pointer-events: none; /* 👈 Allows clicks to pass right through to the input */
 }
+
+@media (max-width: 480px) {
+  .interactive-bg {
+    padding: 10px;
+  }
+
+  .dash-card {
+    padding: 20px 18px;
+    border-radius: 12px;
+  }
+
+  .dash-title {
+    font-size: 19px;
+  }
+}

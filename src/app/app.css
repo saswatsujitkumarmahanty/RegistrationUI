@@ -55,3 +55,14 @@
   padding: 30px;
   overflow-y: auto; /* Only this middle section scrolls */
 }
+@media (max-width: 768px) {
+  .content-container {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-container {
+    padding: 12px;
+  }
+}

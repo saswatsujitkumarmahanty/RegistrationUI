@@ -199,3 +199,26 @@ select.form-input {
     color: #764ba2;
     text-decoration: underline;
 }
+
+@media (max-width: 480px) {
+    .interactive-bg {
+        height: auto;
+        min-height: calc(100vh - 90px);
+        padding: 16px 12px;
+        overflow-y: auto;
+    }
+
+    .signup-card {
+        padding: 18px 16px;
+        border-radius: 12px;
+    }
+
+    .dash-title {
+        font-size: 19px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+}

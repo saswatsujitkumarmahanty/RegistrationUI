@@ -3,8 +3,8 @@
         <div class="dash-header">
             <h2 class="dash-title">Employee Directory</h2>
             <button class="btn-primary-action" *ngIf="isAdmin" (click)="AddEmployee()">
-    + Add Employee
-        </button>
+                + Add Employee
+            </button>
         </div>
 
         <div class="search-bar" style="margin-bottom: 20px;">
@@ -12,10 +12,11 @@
               type="text" 
               (keyup)="onSearch($event)" 
               placeholder="Search by name..." 
-              style="padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ccc;">
+              style="padding: 10px; width: 300px; max-width: 100%; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
         </div>
 
-        <div class="table-responsive">
+        <!-- Desktop / tablet: table view -->
+        <div class="table-responsive desktop-only">
             <table class="custom-table">
                 <thead>
                     <tr>
@@ -53,6 +54,27 @@
 </tr>
                 </tbody>
             </table>
+        </div>
+
+        <!-- Mobile: stacked card view (same data, no horizontal scroll) -->
+        <div class="employee-card-list mobile-only">
+            <div class="employee-card" *ngFor="let data of displayEmployees">
+                <div class="employee-card-top">
+                    <span class="employee-card-name">{{ data.name }}</span>
+                    <span class="gender-badge" [ngClass]="data.gender === 'Male' ? 'badge-male' : 'badge-female'">
+                        {{ data.gender }}
+                    </span>
+                </div>
+                <div class="employee-card-row"><span class="label">Email</span><span>{{ data.email }}</span></div>
+                <div class="employee-card-row"><span class="label">Phone</span><span>{{ data.phone }}</span></div>
+                <div class="employee-card-row"><span class="label">Age</span><span>{{ data.age }}</span></div>
+                <div class="employee-card-row"><span class="label">Salary</span><span class="salary-text">${{ data.salary }}</span></div>
+                <div class="employee-card-actions">
+                    <button class="action-btn btn-view" (click)="onView(data.id)">View</button>
+                    <button class="action-btn btn-update" *ngIf="isAdmin" (click)="onUpdate(data.id)">Update</button>
+                    <button class="action-btn btn-delete" *ngIf="isAdmin" (click)="onDelete(data.id)">Delete</button>
+                </div>
+            </div>
         </div>
         
         <div class="empty-state" *ngIf="displayEmployees.length === 0">

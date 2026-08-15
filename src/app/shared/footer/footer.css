@@ -36,3 +36,26 @@
 .footer-link:hover, .footer-link.active {
   color: #1877f2; /* Changes to blue when hovered or active */
 }
+
+@media (max-width: 480px) {
+  .bottom-nav {
+    padding: 10px 8px;
+  }
+
+  .footer-links {
+    gap: 8px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .footer-link {
+    font-size: 12px;
+    gap: 4px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-link .icon {
+    font-size: 18px;
+  }
+}

@@ -57,6 +57,22 @@
 .dropdown-content.show {
   display: block;
 }
+  
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .dropdown-content {
+    width: min(360px, calc(100vw - 32px)); /* never wider than the viewport */
+  }
+}
+
+@media (max-width: 400px) {
+  .nav-brand {
+    font-size: 1.2rem;
+  }
+}
 
 /* 1. Top Card inside Dropdown */
 .dropdown-card {
