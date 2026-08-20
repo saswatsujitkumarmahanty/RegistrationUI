@@ -4,19 +4,39 @@
   </div>
 
   <div class="nav-profile">
-    <button class="profile-icon-btn" (click)="toggleDropdown()" title="Account Settings">
+    <button class="profile-icon-btn" (click)="toggleDropdown()" title="Account Settings" [attr.aria-expanded]="dropdownOpen">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
         <circle cx="12" cy="7" r="4"></circle>
       </svg>
-      <span class="dropdown-arrow">▼</span>
+      <span class="dropdown-arrow" [class.open]="dropdownOpen">▼</span>
     </button>
-    
+
     <div class="dropdown-content" [class.show]="dropdownOpen">
-      <a routerLink="/account" (click)="closeDropdown()">⚙️ Account</a>
-      <a href="javascript:void(0)" (click)="closeDropdown()">🔧 Settings</a>
-      <hr style="margin: 4px 0; border: none; border-top: 1px solid #edf2f7;">
-      <a href="javascript:void(0)" (click)="logout()" style="color: #e53e3e;">🚪 Logout</a>
+      <div class="dropdown-card">
+        <div class="dropdown-profile-row">
+          <div class="dropdown-avatar">
+            <span>{{ initials }}</span>
+          </div>
+          <span class="dropdown-profile-name">{{ currentUserName }}</span>
+        </div>
+      </div>
+
+      <a routerLink="/account" (click)="closeDropdown()" class="dropdown-menu-item">
+        <span class="menu-icon-circle">⚙️</span>
+        <span class="menu-text">Account</span>
+        <span class="menu-chevron">›</span>
+      </a>
+      <span class="dropdown-menu-item disabled" title="Coming soon">
+        <span class="menu-icon-circle">🔧</span>
+        <span class="menu-text">Settings</span>
+        <span class="menu-badge">Soon</span>
+      </span>
+      <hr class="dropdown-divider">
+      <a href="javascript:void(0)" (click)="logout()" class="dropdown-menu-item logout-item">
+        <span class="menu-icon-circle">🚪</span>
+        <span class="menu-text">Logout</span>
+      </a>
     </div>
   </div>
 </div>

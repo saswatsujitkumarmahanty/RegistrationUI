@@ -1,6 +1,5 @@
-/* Main container matching the app background */
 .dash-container {
-    min-height: calc(100vh - 60px); /* Adjusts for your navbar height */
+    min-height: calc(100vh - 60px);
     background: #f4f7f6;
     display: flex;
     justify-content: center;
@@ -9,7 +8,6 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Elevated Profile Card */
 .dash-card {
     background: white;
     width: 100%;
@@ -41,7 +39,6 @@
     font-size: 0.95rem;
 }
 
-/* Floating Label Input Logic */
 .floating-group {
     position: relative;
     margin-bottom: 25px;
@@ -76,7 +73,6 @@
     transition: all 0.2s ease;
 }
 
-/* Triggers the floating animation when focused or when text is inside */
 .form-input:focus ~ .floating-label,
 .form-input:not(:placeholder-shown) ~ .floating-label {
     top: -10px;
@@ -89,7 +85,6 @@
     border-radius: 4px;
 }
 
-/* Primary Submit Button */
 .btn-primary-action {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -109,7 +104,6 @@
     box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
 }
 
-/* Disabled State for Button (when form is invalid) */
 .btn-primary-action:disabled {
     background: #cbd5e0;
     color: #a0aec0;
@@ -117,7 +111,6 @@
     box-shadow: none;
 }
 
-/* Success Message Banner */
 .alert-success {
     background-color: #c6f6d5;
     color: #22543d;
@@ -135,46 +128,117 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- New Profile Header Styles --- */
+.alert-error {
+    background-color: #fed7d7;
+    color: #742a2a;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 25px;
+    border-left: 4px solid #e53e3e;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.form-input.input-error {
+    border-color: #e53e3e;
+}
+
+.form-input.input-error ~ .floating-label {
+    color: #e53e3e;
+}
+
+.form-input.input-valid {
+    border-color: #10b981;
+    padding-right: 34px;
+}
+
+.form-input.input-valid ~ .floating-label {
+    color: #10b981;
+}
+
+.field-check {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    color: #10b981;
+    font-weight: 700;
+    font-size: 14px;
+    animation: acPopIn 0.2s ease;
+}
+
+@keyframes acPopIn {
+    from { transform: scale(0.4); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.field-error {
+    display: block;
+    color: #e53e3e;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+.profile-avatar {
+    transition: transform 0.25s ease;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.08) rotate(-3deg);
+}
+
+.btn-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: btnSpin 0.7s linear infinite;
+}
+
+@keyframes btnSpin {
+    to { transform: rotate(360deg); }
+}
+
 .profile-header {
     display: flex;
     align-items: center;
-    gap: 20px; /* Space between the circular icon and the text */
+    gap: 20px; 
     margin-bottom: 25px;
-    border-bottom: 1px solid #ced0d4; /* FB border color */
+    border-bottom: 1px solid #ced0d4; 
     padding-bottom: 20px;
 }
 
-/* The Circular Icon Wrapper */
 .profile-avatar {
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background-color: #e4e6eb; /* FB light gray background */
+    background-color: #e4e6eb; 
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    flex-shrink: 0; /* Prevents the circle from squishing */
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); /* Very subtle inner border */
+    flex-shrink: 0; 
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); 
 }
 
-/* Fallback Initials Styling */
 .avatar-initials {
     font-size: 28px;
     font-weight: 700;
-    color: #050505; /* FB primary text color */
+    color: #050505; 
     letter-spacing: 1px;
 }
 
-/* If you decide to use an <img> tag inside the avatar later */
 .profile-avatar img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the photo fills the circle perfectly */
+    object-fit: cover; 
 }
 
-/* Ensure the text aligns properly next to the new icon */
 .header-text {
     display: flex;
     flex-direction: column;

@@ -12,12 +12,17 @@ import { storeAuthResponse } from '../../../core/utilities/storage.utilities';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login-password.html',
-  styleUrl: '../login/login.css', // Reusing the login CSS for the same card styling
+  styleUrl: '../login/login.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginPassword implements OnInit {
+export class LoginPassword implements OnInit, OnDestroy {
+[x: string]: any;
   passwordForm!: FormGroup;
   queryParamsSub: Subscription = new Subscription;
+  isSubmitting = false;
+  errorMessage = '';
+  shake = false;
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -30,8 +35,7 @@ export class LoginPassword implements OnInit {
   {
     this.passwordForm = this.fb.group({
   email: ['', [Validators.required, Validators.email]],
-  password: [
-    '', 
+  password: ['', 
     [
       Validators.required, 
       Validators.minLength(6),
@@ -51,9 +55,17 @@ export class LoginPassword implements OnInit {
     });
   }
 
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+    this.cdr.markForCheck();
+  }
+
   onSubmit(): void {
+    this.errorMessage = '';
      if (this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
+      this.triggerShake();
+      this.cdr.markForCheck();
       return; 
     }
 
@@ -62,21 +74,37 @@ export class LoginPassword implements OnInit {
       password: this.passwordForm.value.password,
     };
 
+    this.isSubmitting = true;
+
     this.service.LoginPassword(payload).subscribe({
   next: (res) => {
-    console.log('Login successful!', res);
     storeAuthResponse(res); // stores token, userId, name, and role together
+
     this.service.userName$.next(res.name);
-    alert('Login successful!');
+    this.isSubmitting = false;
     this.router.navigateByUrl('/registration');
   },
   error: (error: HttpErrorResponse) => {
     console.error('Login failed', error);
-    alert(error?.error?.message || 'Failed to log in.');
-  },
+    this.isSubmitting = false;
+        this.errorMessage = error?.error?.message || 'Failed to log in. Please try again.';
+        this.triggerShake();
+        this.cdr.markForCheck();},
 });
   }
 
+  private triggerShake() {
+    this.shake = false;
+    setTimeout(() => {
+      this.shake = true;
+      this.cdr.markForCheck();
+    }, 0);
+    setTimeout(() => {
+      this.shake = false;
+      this.cdr.markForCheck();
+    }, 500);
+  }
+  
   ngOnDestroy(): void {
     if (this.queryParamsSub) {
       this.queryParamsSub.unsubscribe();

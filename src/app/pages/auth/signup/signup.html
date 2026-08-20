@@ -1,49 +1,70 @@
 <div class="interactive-bg">
     <div class="dash-container">
-        <div class="dash-card signup-card">
+        <div class="dash-card signup-card" [class.shake]="shake">
             <div class="dash-header">
                 <h2 class="dash-title">Create an Account</h2>
                 <p class="dash-subtitle">Join us to manage your profile</p>
             </div>
 
-            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="dash-form">
-                
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="dash-form" novalidate>
+                <p class="form-error-banner" *ngIf="errorMessage">{{ errorMessage }}</p>
+                <p class="form-success-banner" *ngIf="successMessage">{{ successMessage }}</p>
+
                 <div class="floating-group">
-                    <input type="text" formControlName="name" placeholder=" " class="form-input" id="reg-name">
+                    <input type="text" formControlName="name" placeholder=" " class="form-input" id="reg-name"
+                           [class.input-error]="fieldInvalid('name')" [class.input-valid]="fieldValid('name')">
                     <label for="reg-name" class="floating-label">Full Name</label>
+                    <span class="field-check" *ngIf="fieldValid('name')">✓</span>
+                    <span class="field-error" *ngIf="fieldInvalid('name')">Name is required.</span>
                 </div>
 
                 <div class="floating-group">
-                    <div class="select-wrapper">
-                        <select formControlName="gender" class="form-input select-control" id="reg-gender">
-                            <option value="" disabled selected hidden></option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        <label for="reg-gender" class="floating-label">Gender</label>
+                    <span class="segment-label">Gender</span>
+                    <div class="segment-control" role="radiogroup">
+                        <button
+                            type="button"
+                            *ngFor="let g of genderOptions"
+                            class="segment-btn"
+                            role="radio"
+                            [attr.aria-checked]="f['gender'].value === g"
+                            [class.active]="f['gender'].value === g"
+                            (click)="selectGender(g)"
+                        >{{ g }}</button>
                     </div>
+                    <span class="field-error" *ngIf="fieldInvalid('gender')">Please select a gender.</span>
                 </div>
 
                 <div class="floating-group">
-                    <input type="email" formControlName="email" placeholder=" " class="form-input" id="reg-email">
+                    <input type="email" formControlName="email" placeholder=" " class="form-input" id="reg-email"
+                           [class.input-error]="fieldInvalid('email')" [class.input-valid]="fieldValid('email')">
                     <label for="reg-email" class="floating-label">Email Address</label>
+                    <span class="field-check" *ngIf="fieldValid('email')">✓</span>
+                    <span class="field-error" *ngIf="fieldInvalid('email')">
+                        {{ f['email'].errors?.['required'] ? 'Email is required.' : 'Enter a valid email address.' }}
+                    </span>
                 </div>
 
                 <div class="floating-group">
-                    <input type="text" formControlName="phone" placeholder=" " class="form-input" id="reg-phone">
+                    <input type="text" formControlName="phone" placeholder=" " class="form-input" id="reg-phone"
+                           [class.input-error]="fieldInvalid('phone')" [class.input-valid]="fieldValid('phone')">
                     <label for="reg-phone" class="floating-label">Phone Number</label>
+                    <span class="field-check" *ngIf="fieldValid('phone')">✓</span>
+                    <span class="field-error" *ngIf="fieldInvalid('phone')">Phone number is required.</span>
                 </div>
 
                 <div class="form-row">
                     <div class="floating-group flex-1">
-                        <input type="number" formControlName="age" placeholder=" " class="form-input" id="reg-age">
+                        <input type="number" formControlName="age" placeholder=" " class="form-input" id="reg-age"
+                               [class.input-error]="fieldInvalid('age')" [class.input-valid]="fieldValid('age')">
                         <label for="reg-age" class="floating-label">Age</label>
+                        <span class="field-check" *ngIf="fieldValid('age')">✓</span>
+                        <span class="field-error" *ngIf="fieldInvalid('age')">You must be at least 18.</span>
                     </div>
                 </div>
 
-                <button type="submit" [disabled]="!signupForm.valid" class="btn-primary-action">
-                    Sign Up Now
+                <button type="submit" [disabled]="isSubmitting" class="btn-primary-action">
+                    <span class="btn-spinner" *ngIf="isSubmitting"></span>
+                    <span>{{ isSubmitting ? 'Creating account…' : 'Sign Up Now' }}</span>
                 </button>
 
                 <div class="login-redirect">

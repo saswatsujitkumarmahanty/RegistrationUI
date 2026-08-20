@@ -1,8 +1,9 @@
 <div class="dash-container">
+    <div class="dash-card">
     <div class="dash-header profile-header">
-    
+
         <div class="profile-avatar">
-        <span class="avatar-initials">SM</span>
+        <span class="avatar-initials">{{ initials }}</span>
         </div>
 
         <div class="header-text">
@@ -15,16 +16,28 @@
             {{ successMessage }}
         </div>
 
-        <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" class="dash-form">
+        <div *ngIf="errorMessage" class="alert-error">
+            {{ errorMessage }}
+        </div>
+
+        <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" class="dash-form" novalidate>
             <div class="floating-group">
-                <input type="text" formControlName="name" placeholder=" " class="form-input" id="profile-name">
+                <input type="text" formControlName="name" placeholder=" " class="form-input" id="profile-name"
+                       [class.input-error]="accountForm.get('name')?.invalid && accountForm.get('name')?.touched"
+                       [class.input-valid]="fieldValid">
                 <label for="profile-name" class="floating-label">Your Name</label>
+                <span class="field-check" *ngIf="fieldValid">✓</span>
+                <span class="field-error" *ngIf="accountForm.get('name')?.invalid && accountForm.get('name')?.touched">
+                    Name must be at least 2 characters.
+                </span>
             </div>
 
             <div class="action-buttons-container" style="margin-top: 30px;">
-                <button type="submit" [disabled]="!accountForm.valid" class="btn-primary-action" style="width: 100%;">
-                    Save Changes
+                <button type="submit" [disabled]="isSubmitting || !hasChanges || accountForm.invalid" class="btn-primary-action" style="width: 100%;">
+                    <span class="btn-spinner" *ngIf="isSubmitting"></span>
+                    <span>{{ isSubmitting ? 'Saving…' : (hasChanges ? 'Save Changes' : 'No Changes to Save') }}</span>
                 </button>
             </div>
         </form>
     </div>
+</div>

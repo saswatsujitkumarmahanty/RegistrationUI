@@ -1,6 +1,6 @@
 .dash-container {
     padding: 20px;
-    background-color: #f4f7f6; /* Adjust to match your app's background */
+    background-color: #f4f7f6;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -15,7 +15,7 @@
     max-width: 600px;
     margin-top: 40px;
     padding: 30px;
-    border-top: 5px solid #667eea; /* Unified with your main theme color */
+    border-top: 5px solid #667eea;
 }
 
 .dash-header {
@@ -31,7 +31,6 @@
     font-weight: 700;
 }
 
-/* Detail Grid Styling */
 .employee-details {
     display: flex;
     flex-direction: column;
@@ -45,6 +44,63 @@
     background-color: #f8f9fa;
     border-radius: 8px;
     border: 1px solid #e9ecef;
+    animation: rowFadeIn 0.25s ease both;
+}
+
+.detail-row:nth-child(1) { animation-delay: 0ms; }
+.detail-row:nth-child(2) { animation-delay: 40ms; }
+.detail-row:nth-child(3) { animation-delay: 80ms; }
+.detail-row:nth-child(4) { animation-delay: 120ms; }
+.detail-row:nth-child(5) { animation-delay: 160ms; }
+.detail-row:nth-child(6) { animation-delay: 200ms; }
+
+@keyframes rowFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.skeleton-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.skeleton-detail-row {
+    height: 44px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f1f3f5 25%, #e9ecef 37%, #f1f3f5 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+.error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    color: #dc2626;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.btn-secondary-action {
+    background: #edf2f7;
+    color: #4a5568;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-secondary-action:hover {
+    background: #e2e8f0;
 }
 
 .detail-label {
@@ -56,6 +112,32 @@
 .detail-value {
     color: #2b2b2b;
     font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.copy-btn {
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #718096;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.copy-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.copy-btn.copied {
+    border-color: #10b981;
+    color: #10b981;
+    background: #f0fdf9;
 }
 
 .fw-bold {
@@ -67,7 +149,6 @@
     font-weight: 600;
 }
 
-/* Reusing your Gender Badges */
 .gender-badge {
     padding: 5px 12px;
     border-radius: 20px;
@@ -77,7 +158,6 @@
 .badge-male { background-color: #e3f2fd; color: #0d47a1; }
 .badge-female { background-color: #fce4ec; color: #880e4f; }
 
-/* Empty state matching your directory */
 .empty-state {
     text-align: center;
     padding: 40px;
@@ -85,7 +165,6 @@
     font-style: italic;
 }
 
-/* Footer & Buttons */
 .card-footer {
     margin-top: 30px;
     display: flex;
@@ -95,7 +174,7 @@
 }
 
 .btn-primary-action {
-    background-color: #6b5b95; /* Matching your Add Employee button */
+    background-color: #6b5b95; 
     color: white;
     border: none;
     padding: 10px 20px;

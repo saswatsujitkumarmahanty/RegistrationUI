@@ -11,7 +11,6 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
-  // Stale or expired — clear it out so nothing lingers half-authenticated
   clearAuth();
 
   router.navigateByUrl('/login');

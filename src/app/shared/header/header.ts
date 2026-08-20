@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../core/services/service';
@@ -27,8 +27,16 @@ export class Header implements OnInit {
     });
   }
 
+  get initials(): string {
+    const name = this.currentUserName?.trim();
+    if (!name) return '?';
+    const parts = name.split(/\s+/).filter(Boolean);
+    const first = parts[0]?.[0] ?? '';
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    return (first + last).toUpperCase();
+  }
+
   isLoggedIn(): boolean {
-    // If we are NOT on the login or signup page, assume we are logged in
     return this.router.url !== '/login' && this.router.url !== '/signup';
   }
 
@@ -38,6 +46,18 @@ export class Header implements OnInit {
 
   closeDropdown() {
     this.dropdownOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (this.dropdownOpen && (event.target as HTMLElement).closest('.nav-profile')) {
+      this.closeDropdown();
+    }
+  }
+ 
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.closeDropdown();
   }
 
   logout() {

@@ -1,47 +1,80 @@
 <div class="ae-container">
-    <div class="ae-card">
+    <div class="ae-card" [class.shake]="shake">
         <h2 class="ae-title">Add New Employee</h2>
         <hr class="ae-divider">
-        
-        <form [formGroup]="addEmployeeForm" (ngSubmit)="OnSubmit()">
+ 
+        <form [formGroup]="addEmployeeForm" (ngSubmit)="OnSubmit()" novalidate>
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" class="ae-input" placeholder="Enter name" formControlName="name">
+                <input id="name" type="text" class="ae-input" placeholder="Enter name" formControlName="name"
+                       [class.input-error]="fieldInvalid('name')" [class.input-valid]="fieldValid('name')">
+                <span class="field-check" *ngIf="fieldValid('name')">✓</span>
+                <span class="field-error" *ngIf="fieldInvalid('name')">
+                    {{ f['name'].errors?.['required'] ? 'Name is required.' : 'Name must be at least 2 characters.' }}
+                </span>
             </div>
-            
+ 
             <div class="form-group">
-                <label for="gender">Gender:</label>
-                <select class="ae-input" formControlName="gender">
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
+                <label>Gender:</label>
+                <div class="segment-control" role="radiogroup">
+                    <button
+                        type="button"
+                        *ngFor="let g of genderOptions"
+                        class="segment-btn"
+                        role="radio"
+                        [attr.aria-checked]="f['gender'].value === g"
+                        [class.active]="f['gender'].value === g"
+                        (click)="selectGender(g)"
+                    >{{ g }}</button>
+                </div>
+                <span class="field-error" *ngIf="fieldInvalid('gender')">Please select a gender.</span>
             </div>
-            
+ 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="ae-input" placeholder="Enter email" formControlName="email">
+                <input id="email" type="email" class="ae-input" placeholder="Enter email" formControlName="email"
+                       [class.input-error]="fieldInvalid('email')" [class.input-valid]="fieldValid('email')">
+                <span class="field-check" *ngIf="fieldValid('email')">✓</span>
+                <span class="field-error" *ngIf="fieldInvalid('email')">
+                    {{ f['email'].errors?.['required'] ? 'Email is required.' : 'Enter a valid email address.' }}
+                </span>
             </div>
-            
+ 
             <div class="form-group">
                 <label for="phone">Phone:</label>
-                <input type="text" class="ae-input" placeholder="Enter phone" formControlName="phone">
+                <input id="phone" type="text" class="ae-input" placeholder="Enter phone" formControlName="phone"
+                       [class.input-error]="fieldInvalid('phone')" [class.input-valid]="fieldValid('phone')">
+                <span class="field-check" *ngIf="fieldValid('phone')">✓</span>
+                <span class="field-error" *ngIf="fieldInvalid('phone')">
+                    {{ f['phone'].errors?.['required'] ? 'Phone number is required.' : 'Enter a valid phone number.' }}
+                </span>
             </div>
-            
+ 
             <div class="form-row">
                 <div class="form-group half-width">
                     <label for="age">Age:</label>
-                    <input type="number" class="ae-input" placeholder="Age" formControlName="age">
+                    <input id="age" type="number" class="ae-input" placeholder="Age" formControlName="age"
+                           [class.input-error]="fieldInvalid('age')" [class.input-valid]="fieldValid('age')">
+                    <span class="field-check" *ngIf="fieldValid('age')">✓</span>
+                    <span class="field-error" *ngIf="fieldInvalid('age')">Age must be between 18 and 75.
+                    </span>
                 </div>
                 <div class="form-group half-width">
                     <label for="salary">Salary:</label>
-                    <input type="number" class="ae-input" placeholder="Salary" formControlName="salary">
+                    <input id="salary" type="number" class="ae-input" placeholder="Salary" formControlName="salary"
+                           [class.input-error]="fieldInvalid('salary')" [class.input-valid]="fieldValid('salary')">
+                    <span class="field-check" *ngIf="fieldValid('salary')">✓</span>
+                    <span class="field-error" *ngIf="fieldInvalid('salary')">Salary must be a positive number.</span>
                 </div>
             </div>
-            
+ 
+            <p class="form-submit-error" *ngIf="submitError">{{ submitError }}</p>
+ 
             <div class="ae-actions">
-                <button type="submit" class="ae-btn ae-btn-add">Add Employee</button>
-                <button type="button" class="ae-btn ae-btn-cancel" (click)="OnCancel()">Cancel</button>
+                <button type="submit" class="ae-btn ae-btn-add" [disabled]="isSubmitting">
+                    {{ isSubmitting ? 'Adding…' : 'Add Employee' }}
+                </button>
+                <button type="button" class="ae-btn ae-btn-cancel" (click)="OnCancel()" [disabled]="isSubmitting">Cancel</button>
             </div>
         </form>
     </div>

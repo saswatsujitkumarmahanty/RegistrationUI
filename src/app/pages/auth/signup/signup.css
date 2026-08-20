@@ -147,6 +147,142 @@ select.form-input {
     width: 100%;
 }
 
+.form-input.input-error {
+    border-color: #ff7675;
+}
+
+.form-input.input-error ~ .floating-label {
+    color: #ff7675;
+}
+
+.form-input.input-valid {
+    border-color: #10b981;
+    padding-right: 34px;
+}
+
+.form-input.input-valid ~ .floating-label {
+    color: #10b981;
+}
+
+.field-check {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    color: #10b981;
+    font-weight: 700;
+    font-size: 14px;
+    animation: popIn 0.2s ease;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.4); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.field-error {
+    display: block;
+    color: #e53e3e;
+    font-size: 11px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* --- Segmented gender control --- */
+.segment-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #a0aec0;
+    margin-bottom: 6px;
+}
+
+.segment-control {
+    display: flex;
+    gap: 8px;
+}
+
+.segment-btn {
+    flex: 1;
+    padding: 10px 6px;
+    border: 2px solid #edf2f7;
+    border-radius: 10px;
+    background: #f7fafc;
+    color: #718096;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.segment-btn:hover {
+    border-color: #cbd5e0;
+    transform: translateY(-1px);
+}
+
+.segment-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
+    transform: translateY(-1px);
+}
+
+.segment-btn:active {
+    transform: translateY(0) scale(0.97);
+}
+
+/* --- Shake feedback on error --- */
+@keyframes shakeError {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+.dash-card.shake {
+  animation: shakeError 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.form-error-banner {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+}
+
+.form-success-banner {
+    background: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+}
+
+.btn-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: btnSpin 0.7s linear infinite;
+}
+
+@keyframes btnSpin {
+    to { transform: rotate(360deg); }
+}
+
 /* --- CTA Action Button Animations --- */
 .btn-primary-action {
     margin-top: 10px;

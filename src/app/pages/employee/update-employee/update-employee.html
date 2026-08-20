@@ -1,60 +1,96 @@
 <div class="interactive-bg">
     <div class="dash-container">
-        <div class="dash-card update-card">
-            
+        <div class="dash-card update-card" [class.shake]="shake">
+
             <div class="dash-header">
                 <h2 class="dash-title">Update Employee</h2>
                 <p class="dash-subtitle">Modify employee records securely</p>
             </div>
 
-            <form [formGroup]="updateEmployeeForm" (ngSubmit)="OnSubmit()" class="dash-form">
-                
+            <div class="loading-block" *ngIf="isLoading">
+                <div class="spinner"></div>
+                <p>Loading employee record…</p>
+            </div>
+
+            <div class="load-error-block" *ngIf="!isLoading && loadError">
+                <p>Couldn't load this employee record.</p>
+                <button class="btn-secondary-action" (click)="loadEmployee()">Try Again</button>
+            </div>
+
+            <form [formGroup]="updateEmployeeForm" (ngSubmit)="OnSubmit()" class="dash-form" *ngIf="!isLoading && !loadError" novalidate>
+
+                <span class="unsaved-pill" *ngIf="hasUnsavedChanges"><span class="dot"></span>Unsaved changes</span>
+
                 <div class="floating-group">
-                    <input type="text" formControlName="name" placeholder=" " class="form-input" id="emp-name">
+                    <input type="text" formControlName="name" placeholder=" " class="form-input" id="emp-name"
+                           [class.input-error]="fieldInvalid('name')" [class.input-valid]="fieldValid('name')">
                     <label for="emp-name" class="floating-label">Full Name</label>
+                    <span class="field-check" *ngIf="fieldValid('name')">✓</span>
+                    <span class="field-error" *ngIf="fieldInvalid('name')">
+                        {{ f['name'].errors?.['required'] ? 'Name is required.' : 'Name must be at least 2 characters.' }}
+                    </span>
                 </div>
 
                 <div class="floating-group">
                     <div class="select-wrapper">
-                        <select formControlName="gender" class="form-input select-control" id="emp-gender">
-                            <option value="" disabled selected hidden></option>
+                        <select formControlName="gender" class="form-input select-control" id="emp-gender"
+                                [class.input-error]="fieldInvalid('gender')">
+                            <option value="" disabled hidden></option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                         <label for="emp-gender" class="floating-label">Gender</label>
                     </div>
+                    <span class="field-error" *ngIf="fieldInvalid('gender')">Please select a gender.</span>
                 </div>
 
                 <div class="floating-group">
-                    <input type="email" formControlName="email" placeholder=" " class="form-input" id="emp-email">
+                    <input type="email" formControlName="email" placeholder=" " class="form-input" id="emp-email"
+                           [class.input-error]="fieldInvalid('email')" [class.input-valid]="fieldValid('email')">
                     <label for="emp-email" class="floating-label">Email Address</label>
+                    <span class="field-check" *ngIf="fieldValid('email')">✓</span>
+                    <span class="field-error" *ngIf="fieldInvalid('email')">
+                        {{ f['email'].errors?.['required'] ? 'Email is required.' : 'Enter a valid email address.' }}
+                    </span>
                 </div>
 
                 <div class="floating-group">
-                    <input type="text" formControlName="phone" placeholder=" " class="form-input" id="emp-phone">
+                    <input type="text" formControlName="phone" placeholder=" " class="form-input" id="emp-phone"
+                           [class.input-error]="fieldInvalid('phone')" [class.input-valid]="fieldValid('phone')">
                     <label for="emp-phone" class="floating-label">Phone Number</label>
+                    <span class="field-check" *ngIf="fieldValid('phone')">✓</span>
+                    <span class="field-error" *ngIf="fieldInvalid('phone')">
+                        {{ f['phone'].errors?.['required'] ? 'Phone number is required.' : 'Enter a valid phone number.' }}
+                    </span>
                 </div>
 
                 <div class="form-row">
                     <div class="floating-group flex-1">
-                        <input type="number" formControlName="age" placeholder=" " class="form-input" id="emp-age">
+                        <input type="number" formControlName="age" placeholder=" " class="form-input" id="emp-age"
+                               [class.input-error]="fieldInvalid('age')" [class.input-valid]="fieldValid('age')">
                         <label for="emp-age" class="floating-label">Age</label>
+                        <span class="field-check" *ngIf="fieldValid('age')">✓</span>
+                        <span class="field-error" *ngIf="fieldInvalid('age')">Age must be between 18 and 75.</span>
                     </div>
                     <div class="floating-group flex-1">
-                        <input type="number" formControlName="salary" placeholder=" " class="form-input" id="emp-salary">
+                        <input type="number" formControlName="salary" placeholder=" " class="form-input" id="emp-salary"
+                               [class.input-error]="fieldInvalid('salary')" [class.input-valid]="fieldValid('salary')">
                         <label for="emp-salary" class="floating-label">Salary ($)</label>
+                        <span class="field-check" *ngIf="fieldValid('salary')">✓</span>
+                        <span class="field-error" *ngIf="fieldInvalid('salary')">Salary must be a positive number.</span>
                     </div>
                 </div>
 
+                <p class="form-submit-error" *ngIf="submitError">{{ submitError }}</p>
+
                 <div class="action-buttons-container">
-                    <button type="submit" [disabled]="!updateEmployeeForm.valid" class="btn-primary-action">
-                        Update Records
+                    <button type="submit" [disabled]="isSubmitting" class="btn-primary-action">
+                        {{ isSubmitting ? 'Saving…' : 'Update Records' }}
                     </button>
-                    <button type="button" class="btn-secondary-action" (click)="OnCancel()">
+                    <button type="button" class="btn-secondary-action" (click)="OnCancel()" [disabled]="isSubmitting">
                         Cancel
                     </button>
                 </div>
-
             </form>
         </div>
     </div>

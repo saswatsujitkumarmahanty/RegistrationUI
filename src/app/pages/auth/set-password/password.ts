@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,12 +11,16 @@ import { AuthService } from '../../../core/services/service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './password.html',
-  styleUrl: '../login/login.css', // Reusing the login CSS for the same card styling
+  styleUrl: '../login/login.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Password implements OnInit {
   passwordForm!: FormGroup;
   queryParamsSub: Subscription = new Subscription;
+ isSubmitting = false;
+  errorMessage = '';
+  shake = false;
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -40,12 +44,55 @@ export class Password implements OnInit {
 });
   }
 
+  get password() {
+    return this.passwordForm.get('password');
+  }
+
   ngOnInit(): void {}
 
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+    this.cdr.markForCheck();
+  }
+
+  get hasMinLength(): boolean {
+    return (this.password?.value || '').length >= 6;
+  }
+ 
+  get hasLower(): boolean {
+    return /[a-z]/.test(this.password?.value || '');
+  }
+ 
+  get hasUpper(): boolean {
+    return /[A-Z]/.test(this.password?.value || '');
+  }
+ 
+  get hasNumber(): boolean {
+    return /\d/.test(this.password?.value || '');
+  }
+ 
+  get strengthScore(): number {
+    return [this.hasMinLength, this.hasLower, this.hasUpper, this.hasNumber].filter(Boolean).length;
+  }
+ 
+  get strengthLabel(): string {
+    switch (this.strengthScore) {
+      case 4: return 'strong';
+      case 3: return 'good';
+      case 2: return 'fair';
+      case 1: return 'weak';
+      default: return '';
+    }
+  }
+
   onSubmit(): void {
-     if (this.passwordForm.invalid) {
+    this.errorMessage = '';
+ 
+    if (this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
-      return; 
+      this.triggerShake();
+      this.cdr.markForCheck();
+      return;
     }
 
     const payload = {
@@ -53,23 +100,38 @@ export class Password implements OnInit {
       password: this.passwordForm.value.password,
     };
 
+    this.isSubmitting = true;
+
     this.service.Password(payload).subscribe({
       next: (res: any) => {
-        console.log('Password set successfully!', res);
-        
         if (res?.name) {
           localStorage.setItem('userName', res.name);
           this.service.userName$.next(res.name);
         }
-
-        alert('Authentication complete! Password saved.');
+        this.isSubmitting = false;
         this.router.navigateByUrl('/registration');
       },
-      // 5. Safely typed the error handler
-      error: (error: HttpErrorResponse) => { 
+      error: (error: HttpErrorResponse) => {
         console.error('Password setup failed', error);
-        alert(error?.error?.message || 'Failed to save password.');
+        this.isSubmitting = false;
+        this.errorMessage = error?.error?.message || 'Failed to save password. Please try again.';
+        this.triggerShake();
+        this.cdr.markForCheck();
       },
     });
+
+  }
+
+  private triggerShake() {
+    this.shake = false;
+    setTimeout(() => {
+      this.shake = true;
+      this.cdr.markForCheck();
+    }, 0);
+    setTimeout(() => {
+      this.shake = false;
+      this.cdr.markForCheck();
+    }, 500);
+
   }
 }

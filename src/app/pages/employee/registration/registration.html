@@ -1,84 +1,181 @@
 <div class="dash-container">
     <div class="dash-card">
         <div class="dash-header">
-            <h2 class="dash-title">Employee Directory</h2>
+            <div>
+                <h2 class="dash-title">Employee Directory</h2>
+                <p class="dash-count" *ngIf="!isLoading">
+                    {{ displayEmployees.length }} of {{ allEmployees.length }} employee{{ allEmployees.length === 1 ? '' : 's' }}
+                    <span *ngIf="totalPages > 1"> · Page {{ currentPage }} of {{ totalPages }}</span>
+                </p>
+            </div>
             <button class="btn-primary-action" *ngIf="isAdmin" (click)="AddEmployee()">
-                + Add Employee
+                <span class="btn-icon">+</span> Add Employee
             </button>
         </div>
 
-        <div class="search-bar" style="margin-bottom: 20px;">
-            <input 
-              type="text" 
-              (keyup)="onSearch($event)" 
-              placeholder="Search by name..." 
-              style="padding: 10px; width: 300px; max-width: 100%; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
-        </div>
-
-        <!-- Desktop / tablet: table view -->
-        <div class="table-responsive desktop-only">
-            <table class="custom-table">
-                <thead>
-                    <tr>
-                        <th class="3">ID</th>
-                        <th class="2">Name</th>
-                        <th class="1">Gender</th>
-                        <th class="3">Email</th>
-                        <th class="2">Phone</th>
-                        <th class="2">Age</th>
-                        <th class="2">Salary</th>
-                        <th class="1">View</th>
-                        <th class="1">Update</th>
-                        <th class="1">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let data of displayEmployees">
-    <td class="fw-bold">{{ data.id }}</td>
-    <td>{{ data.name }}</td>
-    <td>
-        <span class="gender-badge" [ngClass]="data.gender === 'Male' ? 'badge-male' : 'badge-female'">
-            {{ data.gender }}
-        </span>
-    </td>
-    <td>{{ data.email }}</td>
-    <td>{{ data.phone }}</td>
-    <td>{{ data.age }}</td>
-    <td class="salary-text">${{ data.salary }}</td>
-    
-    <td>
-        <button class="action-btn btn-view" (click)="onView(data.id)" title="View">View</button> </td>
-     <td>  <button class="action-btn btn-update" *ngIf="isAdmin" (click)="onUpdate(data.id)" title="Update">Update</button> </td>
-      <td><button class="action-btn btn-delete" *ngIf="isAdmin" (click)="onDelete(data.id)" title="Delete">Delete</button></td>
-    
-</tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Mobile: stacked card view (same data, no horizontal scroll) -->
-        <div class="employee-card-list mobile-only">
-            <div class="employee-card" *ngFor="let data of displayEmployees">
-                <div class="employee-card-top">
-                    <span class="employee-card-name">{{ data.name }}</span>
-                    <span class="gender-badge" [ngClass]="data.gender === 'Male' ? 'badge-male' : 'badge-female'">
-                        {{ data.gender }}
-                    </span>
-                </div>
-                <div class="employee-card-row"><span class="label">Email</span><span>{{ data.email }}</span></div>
-                <div class="employee-card-row"><span class="label">Phone</span><span>{{ data.phone }}</span></div>
-                <div class="employee-card-row"><span class="label">Age</span><span>{{ data.age }}</span></div>
-                <div class="employee-card-row"><span class="label">Salary</span><span class="salary-text">${{ data.salary }}</span></div>
-                <div class="employee-card-actions">
-                    <button class="action-btn btn-view" (click)="onView(data.id)">View</button>
-                    <button class="action-btn btn-update" *ngIf="isAdmin" (click)="onUpdate(data.id)">Update</button>
-                    <button class="action-btn btn-delete" *ngIf="isAdmin" (click)="onDelete(data.id)">Delete</button>
-                </div>
+        <div class="toolbar">
+            <div class="search-bar">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input
+                  type="text"
+                  (keyup)="onSearch($event)"
+                  [value]="searchTerm"
+                  placeholder="Search by name..."
+                  class="search-input"
+                  aria-label="Search employees by name">
+                <button
+                  class="clear-btn"
+                  *ngIf="searchTerm"
+                  (click)="clearSearch()"
+                  aria-label="Clear search">✕</button>
             </div>
         </div>
-        
-        <div class="empty-state" *ngIf="displayEmployees.length === 0">
-            <p>No employees found.</p>
+
+        <!-- Skeleton loading state -->
+        <div class="skeleton-wrap" *ngIf="isLoading">
+            <div class="skeleton-row" *ngFor="let i of [1,2,3,4,5]">
+                <span class="skeleton-cell w-sm"></span>
+                <span class="skeleton-cell w-md"></span>
+                <span class="skeleton-cell w-sm"></span>
+                <span class="skeleton-cell w-lg"></span>
+                <span class="skeleton-cell w-md"></span>
+            </div>
+        </div>
+
+        <!-- Load error state -->
+        <div class="empty-state error-state" *ngIf="!isLoading && loadError">
+            <p>Couldn't load the employee directory.</p>
+            <button class="btn-secondary-action" (click)="getAllData()">Try Again</button>
+        </div>
+
+        <ng-container *ngIf="!isLoading && !loadError">
+            <!-- Desktop / tablet: table view -->
+            <div class="table-responsive desktop-only">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th (click)="setSort('id')" [class.sorted]="sortKey === 'id'">
+                                ID <span class="sort-arrow" [ngClass]="{'active': sortKey === 'id'}">{{ sortKey === 'id' && sortDir === 'desc' ? '↓' : '↑' }}</span>
+                            </th>
+                            <th (click)="setSort('name')" [class.sorted]="sortKey === 'name'">
+                                Name <span class="sort-arrow" [ngClass]="{'active': sortKey === 'name'}">{{ sortKey === 'name' && sortDir === 'desc' ? '↓' : '↑' }}</span>
+                            </th>
+                            <th (click)="setSort('gender')" [class.sorted]="sortKey === 'gender'">
+                                Gender <span class="sort-arrow" [ngClass]="{'active': sortKey === 'gender'}">{{ sortKey === 'gender' && sortDir === 'desc' ? '↓' : '↑' }}</span>
+                            </th>
+                            <th (click)="setSort('email')" [class.sorted]="sortKey === 'email'">
+                                Email <span class="sort-arrow" [ngClass]="{'active': sortKey === 'email'}">{{ sortKey === 'email' && sortDir === 'desc' ? '↓' : '↑' }}</span>
+                            </th>
+                            <th (click)="setSort('phone')" [class.sorted]="sortKey === 'phone'">
+                                Phone <span class="sort-arrow" [ngClass]="{'active': sortKey === 'phone'}">{{ sortKey === 'phone' && sortDir === 'desc' ? '↓' : '↑' }}</span>
+                            </th>
+                            <th (click)="setSort('age')" [class.sorted]="sortKey === 'age'">
+                                Age <span class="sort-arrow" [ngClass]="{'active': sortKey === 'age'}">{{ sortKey === 'age' && sortDir === 'desc' ? '↓' : '↑' }}</span>
+                            </th>
+                            <th (click)="setSort('salary')" [class.sorted]="sortKey === 'salary'">
+                                Salary <span class="sort-arrow" [ngClass]="{'active': sortKey === 'salary'}">{{ sortKey === 'salary' && sortDir === 'desc' ? '↓' : '↑' }}</span>
+                            </th>
+                            <th class="action-header">View</th>
+                            <th class="action-header" *ngIf="isAdmin">Update</th>
+                            <th class="action-header" *ngIf="isAdmin">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of pagedEmployees; let i = index"
+                            class="data-row"
+                            [class.row-removing]="removingId === data.id"
+                            [style.animation-delay.ms]="i * 30">
+                            <td class="fw-bold">{{ data.id }}</td>
+                            <td>{{ data.name }}</td>
+                            <td>
+                                <span class="gender-badge" [ngClass]="data.gender === 'Male' ? 'badge-male' : 'badge-female'">
+                                    {{ data.gender }}
+                                </span>
+                            </td>
+                            <td>{{ data.email }}</td>
+                            <td>{{ data.phone }}</td>
+                            <td>{{ data.age }}</td>
+                            <td class="salary-text">${{ data.salary }}</td>
+
+                            <td class="action-cell">
+                                <button class="action-btn btn-view" (click)="onView(data.id)" title="View">View</button>
+                            </td>
+                            <td class="action-cell" *ngIf="isAdmin">
+                                <button class="action-btn btn-update" (click)="onUpdate(data.id)" title="Update">Update</button>
+                            </td>
+                            <td class="action-cell" *ngIf="isAdmin">
+                                <button class="action-btn btn-delete" (click)="requestDelete(data)" title="Delete">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile: stacked card view (same data, no horizontal scroll) -->
+            <div class="employee-card-list mobile-only">
+                <div class="employee-card data-row"
+                     *ngFor="let data of pagedEmployees; let i = index"
+                     [class.row-removing]="removingId === data.id"
+                     [style.animation-delay.ms]="i * 30">
+                    <div class="employee-card-top">
+                        <span class="employee-card-name">{{ data.name }}</span>
+                        <span class="gender-badge" [ngClass]="data.gender === 'Male' ? 'badge-male' : 'badge-female'">
+                            {{ data.gender }}
+                        </span>
+                    </div>
+                    <div class="employee-card-row"><span class="label">Email</span><span>{{ data.email }}</span></div>
+                    <div class="employee-card-row"><span class="label">Phone</span><span>{{ data.phone }}</span></div>
+                    <div class="employee-card-row"><span class="label">Age</span><span>{{ data.age }}</span></div>
+                    <div class="employee-card-row"><span class="label">Salary</span><span class="salary-text">${{ data.salary }}</span></div>
+                    <div class="employee-card-actions">
+                        <button class="action-btn btn-view" (click)="onView(data.id)">View</button>
+                        <button class="action-btn btn-update" *ngIf="isAdmin" (click)="onUpdate(data.id)">Update</button>
+                        <button class="action-btn btn-delete" *ngIf="isAdmin" (click)="requestDelete(data)">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="empty-state" *ngIf="displayEmployees.length === 0 && searchTerm">
+                <p>No employees match "{{ searchTerm }}".</p>
+                <button class="btn-secondary-action" (click)="clearSearch()">Clear Search</button>
+            </div>
+            <div class="empty-state" *ngIf="displayEmployees.length === 0 && !searchTerm">
+                <p>No employees found.</p>
+            </div>
+
+            <div class="pagination-bar" *ngIf="totalPages > 1">
+                <button class="page-nav-btn" (click)="prevPage()" [disabled]="currentPage === 1" aria-label="Previous page">‹</button>
+                <button
+                    *ngFor="let p of pageNumbers"
+                    class="page-num-btn"
+                    [class.active]="p === currentPage"
+                    (click)="goToPage(p)">{{ p }}</button>
+                <button class="page-nav-btn" (click)="nextPage()" [disabled]="currentPage === totalPages" aria-label="Next page">›</button>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<!-- Delete confirmation modal -->
+<div class="modal-backdrop" *ngIf="pendingDelete" (click)="cancelDelete()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+        <h3 class="modal-title">Remove employee?</h3>
+        <p class="modal-body">
+            This will permanently remove <strong>{{ pendingDelete.name }}</strong> from the directory. This can't be undone.
+        </p>
+        <div class="modal-actions">
+            <button class="btn-secondary-action" (click)="cancelDelete()" [disabled]="isDeleting">Cancel</button>
+            <button class="btn-danger-action" (click)="confirmDelete()" [disabled]="isDeleting">
+                {{ isDeleting ? 'Removing…' : 'Remove' }}
+            </button>
         </div>
     </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" *ngIf="toastMessage" [ngClass]="toastKind">
+    {{ toastMessage }}
 </div>

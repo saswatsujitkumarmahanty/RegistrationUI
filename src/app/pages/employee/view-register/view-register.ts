@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmployeeService } from '../../../core/services/employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,13 +14,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ViewRegister implements OnInit {
   constructor(
     private registration: EmployeeService,
-    private cdr: ChangeDetectorRef,
     private activeRoute: ActivatedRoute,
     private router: Router,
   ) {}
+
   UserData: any;
+  isLoading = true;
+  loadError = false;
+  copiedField: string | null = null;
+
   userId!: {
-    //
     uid: any;
   };
 
@@ -28,19 +31,35 @@ export class ViewRegister implements OnInit {
     this.userId = {
       uid: this.activeRoute.snapshot.params['id'],
     };
+    this.loadEmployee();
+  }
 
-    // Let's ask the console exactly what the backend is handing us
+  loadEmployee(): void {
+    this.isLoading = true;
+    this.loadError = false;
     this.registration.getDataById(this.userId.uid).subscribe({
       next: (res) => {
-        console.log('BACKEND DATA ARRIVED:', res); // <--- This is the key!
         this.UserData = res;
-        this.cdr.detectChanges();
+        this.isLoading = false;
       },
       error: (err) => {
-        console.error('API ERROR:', err);
+        console.error('Error fetching employee record:', err);
+        this.isLoading = false;
+        this.loadError = true;
       },
     });
   }
+
+  copyToClipboard(field: string, value: string): void {
+    if (!value) return;
+    navigator.clipboard?.writeText(value).then(() => {
+      this.copiedField = field;
+      setTimeout(() => {
+        if (this.copiedField === field) this.copiedField = null;
+      }, 1500);
+    });
+  }
+
   OnClose() {
     this.router.navigateByUrl('registration');
   }

@@ -10,10 +10,16 @@ import { AuthService } from '../../../core/services/service';
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './signup.html',
   changeDetection: ChangeDetectionStrategy.Default,
-  styleUrl: './signup.css', // Assuming you have a CSS file for styling
+  styleUrl: './signup.css',
 })
 export class Signup implements OnInit {
   signupForm!: FormGroup;
+  isSubmitting = false;
+  errorMessage = '';
+  successMessage = '';
+  shake = false;
+
+  genderOptions = ['Male', 'Female', 'Other'];
 
   constructor(
     private fb: FormBuilder,
@@ -22,7 +28,6 @@ export class Signup implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Setting up the form to match the C# 'User' model exactly
     this.signupForm = this.fb.group({
       name: ['', Validators.required],
       gender: ['', Validators.required],
@@ -32,24 +37,55 @@ export class Signup implements OnInit {
     });
   }
 
-  onSubmit() {
-    if (this.signupForm.valid) {
-      this.service.signup(this.signupForm.value).subscribe({
-        next: (response: any) => {
-          console.log('Registration successful', response);
-          alert('Account created successfully! Please log in.');
-
-          // Send them to the login page after signing up
-          this.router.navigateByUrl('/login');
-        },
-        error: (error) => {
-          console.error('Registration failed', error);
-          alert('Failed to create account. That email might already be registered.');
-        },
-      });
-    } else {
-      alert('Please fill out all fields correctly.');
-    }
+  get f() {
+    return this.signupForm.controls;
   }
-};
 
+  fieldInvalid(name: string): boolean {
+    const c = this.signupForm.get(name);
+    return !!c && c.invalid && (c.dirty || c.touched);
+  }
+
+  fieldValid(name: string): boolean {
+    const c = this.signupForm.get(name);
+    return !!c && c.valid && (c.dirty || c.touched);
+  }
+
+  selectGender(value: string): void {
+    this.signupForm.get('gender')?.setValue(value);
+    this.signupForm.get('gender')?.markAsDirty();
+    this.signupForm.get('gender')?.markAsTouched();
+  }
+
+  onSubmit() {
+    this.errorMessage = '';
+ 
+    if (this.signupForm.invalid) {
+      this.signupForm.markAllAsTouched();
+      this.triggerShake();
+      return;
+    }
+ 
+    this.isSubmitting = true;
+ 
+    this.service.signup(this.signupForm.value).subscribe({
+      next: (response: any) => {
+        this.isSubmitting = false;
+        this.successMessage = 'Account created! Redirecting to login…';
+        setTimeout(() => this.router.navigateByUrl('/login'), 900);
+      },
+      error: (error) => {
+        console.error('Registration failed', error);
+        this.isSubmitting = false;
+        this.errorMessage =
+          error?.error?.message || 'Failed to create account. That email might already be registered.';
+    
+    this.triggerShake();}
+  }
+  )};
+  private triggerShake() {
+    this.shake = false;
+    setTimeout(() => (this.shake = true), 0);
+    setTimeout(() => (this.shake = false), 500);
+}
+}

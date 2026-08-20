@@ -6,12 +6,12 @@ export function isTokenExpired(token: string): boolean {
     const payload = JSON.parse(atob(padded));
 
     if (!payload.exp) {
-      return true; // no expiry claim at all — treat as invalid rather than assume it's fine
+      return true;
     }
 
     const nowInSeconds = Math.floor(Date.now() / 1000);
     return payload.exp < nowInSeconds;
   } catch {
-    return true; // malformed/unparseable token — treat as expired, not as "somehow valid"
+    return true;
   }
 }

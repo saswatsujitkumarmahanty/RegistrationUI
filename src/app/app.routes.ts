@@ -10,7 +10,7 @@ import { Password } from './pages/auth/set-password/password';
 import { LoginPassword } from './pages/auth/login-password/login-password';
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/role.guard';
-
+import { unsavedChangesGuard } from './guards/unsavedchanges.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'signup', pathMatch: 'full' },
@@ -23,7 +23,7 @@ export const routes: Routes = [
   { path: 'account', component: Account, canActivate: [authGuard] },
 
   // Admin-only — mirrors backend [Authorize(Roles = "Admin")] on EmployeeController writes
-  { path: 'add-employee', component: AddEmployee, canActivate: [adminGuard] },
-  { path: 'update-employee/:id', component: UpdateEmployee, canActivate: [adminGuard] },
+  { path: 'add-employee', component: AddEmployee, canActivate: [adminGuard], canDeactivate: [unsavedChangesGuard] },
+  { path: 'update-employee/:id', component: UpdateEmployee, canActivate: [adminGuard], canDeactivate: [unsavedChangesGuard] },
 ];
 

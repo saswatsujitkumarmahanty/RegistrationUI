@@ -16,8 +16,10 @@ export class Account implements OnInit {
   accountForm!: FormGroup;
   userId: string | null = '';
   successMessage: string = '';
+  errorMessage: string = '';
   currentUserName: string = '';
   dropdownOpen: boolean = false;
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +38,27 @@ export class Account implements OnInit {
     });
   }
 
+  get initials(): string {
+    const name = this.currentUserName?.trim();
+    if (!name) return '?';
+    const parts = name.split(/\s+/).filter(Boolean);
+    const first = parts[0]?.[0] ?? '';
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    return (first + last).toUpperCase();
+  }
+
+  get nameField() {
+    return this.accountForm.get('name');
+  }
+ 
+  get fieldValid(): boolean {
+    return !!this.nameField && this.nameField.valid && this.nameField.dirty;
+  }
+ 
+  get hasChanges(): boolean {
+    return this.accountForm.dirty && this.nameField?.value !== this.currentUserName;
+  }
+
   toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
   }
@@ -50,27 +73,36 @@ export class Account implements OnInit {
   }
 
   onSubmit() {
-    if (this.accountForm.valid) {
-      const newName = this.accountForm.value.name;
-
-      if (!this.userId) {
-        alert('Your session appears to be invalid. Please log in again.');
-        this.service.logout();
-        return;
-      }
-
-      this.service.updateUserName(this.userId, newName).subscribe({
-        next: (res: any) => {
-          localStorage.setItem('userName', newName);
-          this.service.userName$.next(newName);
-          this.successMessage = 'Name updated in database successfully!';
-          setTimeout(() => (this.successMessage = ''), 3000);
-        },
-        error: (err: any) => {
-          console.error('Update failed:', err);
-          alert('Failed to update name in database. Check console.');
-        },
+    this.errorMessage = '';
+ 
+    if (this.accountForm.invalid) {
+      this.accountForm.markAllAsTouched();
+      return;
+    }
+    const newName = this.accountForm.value.name;
+ 
+    if (!this.userId) {
+      this.errorMessage = 'Your session appears to be invalid. Please log in again.';
+      this.service.logout();
+      return;
+    }
+ 
+    this.isSubmitting = true;
+ 
+    this.service.updateUserName(this.userId, newName).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('userName', newName);
+        this.currentUserName = newName;
+        this.service.userName$.next(newName);
+        this.isSubmitting = false;
+        this.successMessage = 'Name updated successfully.';
+        setTimeout(() => (this.successMessage = ''), 3000);
+      },
+      error: (err: any) => {
+        console.error('Update failed:', err);
+        this.isSubmitting = false;
+        this.errorMessage = 'Failed to update name. Please try again.';
+      },
       });
     }
   }
-}
