@@ -47,14 +47,14 @@ export class Header implements OnInit {
   closeDropdown() {
     this.dropdownOpen = false;
   }
-
+ 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    if (this.dropdownOpen && (event.target as HTMLElement).closest('.nav-profile')) {
+    if (this.dropdownOpen && !(event.target as HTMLElement).closest('.nav-profile')) {
       this.closeDropdown();
     }
   }
- 
+
   @HostListener('document:keydown.escape')
   onEscape() {
     this.closeDropdown();
