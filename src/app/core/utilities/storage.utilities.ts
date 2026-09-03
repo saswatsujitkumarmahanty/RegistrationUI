@@ -28,3 +28,20 @@ export function getRole(): string | null {
 export function isAdmin(): boolean {
   return getRole() === 'Admin';
 }
+ 
+function avatarKey(userId: string): string {
+  return `avatar_${userId}`;
+}
+ 
+export function getAvatar(userId: string | null): string | null {
+  if (!userId) return null;
+  return localStorage.getItem(avatarKey(userId));
+}
+ 
+export function setAvatar(userId: string, dataUrl: string): void {
+  localStorage.setItem(avatarKey(userId), dataUrl);
+}
+ 
+export function removeAvatar(userId: string): void {
+  localStorage.removeItem(avatarKey(userId));
+}

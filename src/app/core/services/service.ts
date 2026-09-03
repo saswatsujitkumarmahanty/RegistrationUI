@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Signup, Login, AuthResponse } from '../models/auth';
 import { environment } from '../../../environments/environment';
-import { clearAuth } from '../utilities/storage.utilities';
+import { clearAuth, getAvatar } from '../utilities/storage.utilities';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,8 @@ export class AuthService {
   private authUrl = `${environment.apiUrl}/Auth`;
 
   public userName$ = new BehaviorSubject<string>(localStorage.getItem('userName') || 'User');
+
+  public avatarUrl$ = new BehaviorSubject<string | null>(getAvatar(localStorage.getItem('userId')));
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -48,6 +50,7 @@ export class AuthService {
   logout(): void {
     clearAuth();
     this.userName$.next('User');
-    this.router.navigateByUrl('/login');
+    this.avatarUrl$.next(null);
+    window.location.href = '/login';
   }
 }
