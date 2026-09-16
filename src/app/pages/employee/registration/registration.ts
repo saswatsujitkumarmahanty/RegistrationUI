@@ -209,5 +209,8 @@ export class Registration implements OnInit {
     this.toastKind = kind;
     this.toastTimeout = setTimeout(() => (this.toastMessage = ''), 3000);
   }
- 
+
+ onViewCtc(id: string | number): void {
+    this.router.navigate(['salary', id]);
+  }
 }

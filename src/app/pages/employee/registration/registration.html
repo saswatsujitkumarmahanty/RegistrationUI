@@ -98,7 +98,12 @@
                             <td>{{ data.email }}</td>
                             <td>{{ data.phone }}</td>
                             <td>{{ data.age }}</td>
-                            <td class="salary-text">${{ data.salary }}</td>
+                            <td class="salary-text">
+                            <a *ngIf="isAdmin" (click)="onViewCtc(data.id)" style="color: #4f46e5; text-decoration: underline; cursor: pointer;" title="View CTC Details">
+                            ${{ data.salary }}
+                            </a>
+                            <span *ngIf="!isAdmin">${{ data.salary }}</span>
+                            </td>
 
                             <td class="action-cell">
                                 <button class="action-btn btn-view" (click)="onView(data.id)" title="View">View</button>
@@ -129,7 +134,15 @@
                     <div class="employee-card-row"><span class="label">Email</span><span>{{ data.email }}</span></div>
                     <div class="employee-card-row"><span class="label">Phone</span><span>{{ data.phone }}</span></div>
                     <div class="employee-card-row"><span class="label">Age</span><span>{{ data.age }}</span></div>
-                    <div class="employee-card-row"><span class="label">Salary</span><span class="salary-text">${{ data.salary }}</span></div>
+                    <div class="employee-card-row">
+                    <span class="label">Salary</span>
+                    <span class="salary-text">
+                    <a *ngIf="isAdmin" (click)="onViewCtc(data.id)" style="color: #4f46e5; text-decoration: underline; cursor: pointer;">
+                    ${{ data.salary }}
+                    </a>
+                    <span *ngIf="!isAdmin">${{ data.salary }}</span>
+                    </span>
+                    </div>
                     <div class="employee-card-actions">
                         <button class="action-btn btn-view" (click)="onView(data.id)">View</button>
                         <button class="action-btn btn-update" *ngIf="isAdmin" (click)="onUpdate(data.id)">Update</button>

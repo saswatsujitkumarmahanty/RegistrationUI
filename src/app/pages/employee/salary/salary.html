@@ -1,0 +1,71 @@
+<div class="dash-container">
+    <div class="dash-card view-card">
+        <div class="dash-header">
+            <h2 class="dash-title">Salary & CTC Details</h2>
+        </div>
+
+        <div class="skeleton-details" *ngIf="isLoading">
+            <div class="skeleton-detail-row" *ngFor="let i of [1,2,3]"></div>
+        </div>
+
+        <div class="empty-state error-state" *ngIf="!isLoading && loadError">
+            <p>Couldn't load this employee's CTC details.</p>
+            <button class="btn-secondary-action" (click)="ngOnInit()">Try Again</button>
+        </div>
+
+        <div class="employee-details" *ngIf="!isLoading && !loadError && employeeData">
+            <div class="detail-row">
+                <span class="detail-label">Name</span>
+                <span class="detail-value fw-bold">{{employeeData.name}}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Email</span>
+                <span class="detail-value">{{employeeData.email}}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Total Annual CTC</span>
+                <span class="detail-value salary-text fw-bold" style="color: #10b981;">${{employeeData.salary}}</span>
+            </div>
+
+            <!-- Breakdown Box -->
+            <div class="breakdown-box" *ngIf="breakdown">
+                <h4 class="breakdown-title">Salary Breakdown</h4>
+                <div class="breakdown-details">
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Basic (66%)</span>
+                        <span class="breakdown-value">${{breakdown.basic | number:'1.2-2'}}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">DA (3% of Basic)</span>
+                        <span class="breakdown-value">${{breakdown.da | number:'1.2-2'}}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">HRA (10% of Basic)</span>
+                        <span class="breakdown-value">${{breakdown.hra | number:'1.2-2'}}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Medical (5% of Basic)</span>
+                        <span class="breakdown-value">${{breakdown.medical | number:'1.2-2'}}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">PF (12% of Basic)</span>
+                        <span class="breakdown-value">${{breakdown.pf | number:'1.2-2'}}</span>
+                    </div>
+                    
+                    <hr class="breakdown-divider">
+
+                    <div class="breakdown-item">
+                        <span class="breakdown-label fw-bold">Other Allowances</span>
+                        <span class="breakdown-value fw-bold">${{breakdown.other | number:'1.2-2'}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button class="btn-primary-action" (click)="OnBack()">Back to Directory</button>
+        </div>
+    </div>
+</div>
